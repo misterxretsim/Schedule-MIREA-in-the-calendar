@@ -1,3 +1,5 @@
+package ru.gosha.SG_Muwa;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -32,6 +34,7 @@ public class Couple {
      */
     public static Iterable<Couple> GetCouplesByPeriod(Date Start, Date Finish, byte DayOfTheWeek, String NameOfTeacher, String ItemTitle, String Audience, String Address, String TypeOfLesson, int NumberOfCoupleDouble, int[] TimeOfCouples) {
         ///.get(Calendar.DAY_OF_WEEK);
+        return null;
 
     }
 }

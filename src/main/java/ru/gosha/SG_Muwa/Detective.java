@@ -1,4 +1,4 @@
-
+package ru.gosha.SG_Muwa;
 /*
 План детектива:
 0. Узнаю список времён: Начала и окончания пар.
@@ -58,7 +58,7 @@ public class Detective {
             if(file.getCellData(posEntryX, basePos.y).equals("Предмет"))
                 for(int DayOfTheWeek = 1; DayOfTheWeek <= 7; DayOfTheWeek++) {
                     // Выставляем курсор на название первой пары дня.
-                    Point cursor = new Point(posEntryX, basePos.y + 1 + DayOfTheWeek * CountCoples);
+                    Point cursor = new Point(posEntryX, basePos.y + 1 + DayOfTheWeek * CountCouples);
                     if(IsDayFree(cursor, CountCouples, file)) continue; // Если день свободен, то ничего не добавляем.
                     for (Couple couple : GetCoupleFromAnchor(posEntryX, basePos.y, file)) {
                         // Хорошо! Мы получили список занятий у группы. Если это группа - то просто добавить, если это преподаватель - то отфильтровать.
@@ -98,6 +98,8 @@ public class Detective {
     private static String GetAddressOfDay(Point titleOfDay, int CountCouples, String DefaultAddress, ExcelFileInterface file) {
         for(int y = titleOfDay.y; y < titleOfDay.y + CountCouples*2; y++)
             if(file.getCellData(titleOfDay.x, y).equals("Занятия по адресу:"))
+                return null;
+        return null;
     }
 
     /**
@@ -138,6 +140,7 @@ public class Detective {
      * @return Множество занятий у группы.
      */
     private static Iterable<Couple> GetCoupleFromAnchor(int Column, int Row, ExcelFileInterface file){
+        return null;
 
 
     }
