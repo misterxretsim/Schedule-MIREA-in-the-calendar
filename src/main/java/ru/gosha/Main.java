@@ -10,6 +10,7 @@ public class Main {
         System.out.println(openFileXLS.getCellData(1,1));
         System.out.println(openFileXLS.getCellData(1,2));
         System.out.println(openFileXLS.getCellData(2,2));
+        System.out.println(openFileXLS.getCellData(2,2));
         openFileXLS.close();
 
         InputSeeker inputSeeker = new InputSeeker();
