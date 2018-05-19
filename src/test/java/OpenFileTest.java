@@ -32,13 +32,13 @@ public class OpenFileTest {
             e.printStackTrace();
         }
 
-        OpenFile openFile = new OpenFile();
-        assertEquals("Error 1:1(AA)", "АА", openFile.Open("delete1.xls", 1,1));
-        assertEquals("Error 1:2(AБ)", "АБ", openFile.Open("delete1.xls", 1,2));
-        assertEquals("Error 2:1(БА)", "БА", openFile.Open("delete1.xls", 2,1));
-        assertEquals("Error 2:2(Груша)", "Груша", openFile.Open("delete1.xls", 2,2));
-        //assertEquals("Error -1:-1(null)", null, openFile.Open("/Users/georgijfalileev/Downloads/delete.xls", -1,-1));
-        //assertEquals("Error 999:999()", null, openFile.Open("/Users/georgijfalileev/Downloads/delete.xls",    100,100));
+
+        OpenFile openFile = new OpenFile("delete1.xls");
+        assertEquals("Error 1:1(AA)", "АА", openFile.getCellData(1,1));
+        assertEquals("Error 1:2(AБ)", "АБ", openFile.getCellData(1,2));
+        assertEquals("Error 2:1(БА)", "БА", openFile.getCellData(2,1));
+        assertEquals("Error 2:2(Груша)", "Груша", openFile.getCellData(2,2));
+
 
     }
 }

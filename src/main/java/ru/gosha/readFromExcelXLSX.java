@@ -14,14 +14,9 @@ import java.io.IOException;
 public class readFromExcelXLSX implements ExcelFileInterface{
     XSSFWorkbook myExcelBook = null;
 
-    /**
-     * Конструктор принимает название/путь к xls файлу и создает Workbook
-     * @param fileName название/путь файла xls
-     * @throws IOException
-     */
 
-    readFromExcelXLSX(String fileName) throws IOException {
-        myExcelBook = new XSSFWorkbook(new FileInputStream(fileName));
+    readFromExcelXLSX(XSSFWorkbook myExcelBook) throws IOException {
+        this.myExcelBook = myExcelBook;
     }
 
     /**
@@ -41,11 +36,6 @@ public class readFromExcelXLSX implements ExcelFileInterface{
             name = row.getCell(Column - 1).getStringCellValue();
         }
 
-        try {
-            myExcelBook.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return name;
     }
 

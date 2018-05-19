@@ -1,6 +1,7 @@
 package ru.gosha.SG_Muwa;
 
 import java.io.Closeable;
+import java.io.IOException;
 
 // Интерфейс по работе с Excel файлами. Экземпляр такого интерфейса должен хранит в себе дескриптор файла.
 public interface ExcelFileInterface extends Closeable {
@@ -11,6 +12,6 @@ public interface ExcelFileInterface extends Closeable {
      * @param Row Порядковый номер строки. Отсчёт начинается с 1.
      * @return Текстовые данные в ячейке.
      */
-    String getCellData(int Column, int Row);
+    String getCellData(int Column, int Row) throws IOException;
 
 }

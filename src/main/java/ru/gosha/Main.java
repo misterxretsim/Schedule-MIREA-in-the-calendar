@@ -6,9 +6,12 @@ import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        OpenFile openFile = new OpenFile();
-        System.out.println(openFile.Open("delete1.xls", 1, 2));
-        System.out.println(openFile.Open("delete1.xls", 2, 1));
+        OpenFile openFileXLS = new OpenFile("delete1.xls");
+        System.out.println(openFileXLS.getCellData(1,1));
+        System.out.println(openFileXLS.getCellData(1,2));
+        System.out.println(openFileXLS.getCellData(2,2));
+        openFileXLS.close();
+
         InputSeeker inputSeeker = new InputSeeker();
         Seeker seeker = inputSeeker.setSeeker();
         System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");
