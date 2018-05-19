@@ -115,6 +115,7 @@ public class Detective {
                 IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
                 IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
             }
+            return null; //ДОБАВИЛ НУЛЛ
     }
 
     /**
@@ -185,6 +186,7 @@ public class Detective {
             String[] titles = file.getCellData(column, row).trim().split("\r\n|\n"); // Регулярное выражение. Делать новую строку либо от \r\n либо от \n. Универсально!
 
         }
+        return null;
     }
 
 
@@ -246,7 +248,7 @@ public class Detective {
                 output[indexArray++] = GetMinutesFromTimeString(file.getCellData(x, y));
         return output;
     }
-
+    
     /**
      * Конвектирует время в формате HH-MM или HH:MM в минуты.
      * @param inputT Входящее время в строковом представлении.
