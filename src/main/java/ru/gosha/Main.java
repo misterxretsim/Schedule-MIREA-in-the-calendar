@@ -7,8 +7,8 @@ import java.text.ParseException;
 public class Main {
     public static void main(String[] args) throws Exception {
         OpenFile openFile = new OpenFile();
-        System.out.println(openFile.Open("/Users/georgijfalileev/Downloads/Example2.xlsx"));
-        System.out.println(openFile.Open("/Users/georgijfalileev/Downloads/Example1.xls"));
+        System.out.println(openFile.Open("delete1.xls", 1, 2));
+        System.out.println(openFile.Open("delete1.xls", 1, 1));
         InputSeeker inputSeeker = new InputSeeker();
         Seeker seeker = inputSeeker.setSeeker();
         System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");

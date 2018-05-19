@@ -248,7 +248,7 @@ public class Detective {
                 output[indexArray++] = GetMinutesFromTimeString(file.getCellData(x, y));
         return output;
     }
-
+    
     /**
      * Конвектирует время в формате HH-MM или HH:MM в минуты.
      * @param inputT Входящее время в строковом представлении.

@@ -13,7 +13,7 @@ public class OpenFile {
      * @return возвращает значение ячейки Excel файла.
      * @throws IOException О ДА!
      */
-    public String Open(String fileName) throws IOException {
+    public String Open(String fileName, int Column, int Row) throws IOException {
         String type = null;
         String result = null;
         for (int i = 0; i < fileName.length(); i++){
@@ -23,12 +23,12 @@ public class OpenFile {
         }
 
         if (type.equals("xlsx")) {
-            ExcelFileInterface read1 = new  readFromExcelXLSX("/Users/georgijfalileev/Downloads/Example2.xlsx");
-            result = read1.getCellData(1,1);
+            ExcelFileInterface read1 = new  readFromExcelXLSX(fileName);
+            result = read1.getCellData(Column,Row);
         }else {
             if (type.equals("xls")){
-                ExcelFileInterface read = new readFromExcelXLS("/Users/georgijfalileev/Downloads/Example1.xls");
-                result = read.getCellData(1,1);
+                ExcelFileInterface read = new readFromExcelXLS(fileName);
+                result = read.getCellData(Column,Row);
             }
         }
         System.out.println(type);
