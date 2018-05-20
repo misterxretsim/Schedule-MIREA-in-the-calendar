@@ -30,7 +30,7 @@ public class Detective {
      * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
      * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
-    public static void StartAnInvestigations(Seeker seeker, Iterable<ExcelFileInterface> files) throws DetectiveException, IOException {
+    public static void StartAnInvestigations(Seeker seeker, Iterable<ExcelFileInterface> files) throws Exception {
         for(ExcelFileInterface f : files) StartAnInvestigation(seeker, f);
     }
 
@@ -42,7 +42,7 @@ public class Detective {
      * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
      * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
-    public static void StartAnInvestigation(Seeker seeker, ExcelFileInterface file) throws DetectiveException, IOException {
+    public static void StartAnInvestigation(Seeker seeker, ExcelFileInterface file) throws Exception {
         Point WeekPositionFirst = SeekEverythingInLeftUp("Неделя", file);
         List<Point> IgnoresCoupleTitle = new LinkedList<>();
         int[] Times = GetTimes(WeekPositionFirst, file); // Узнать время начала и конца пар.
@@ -90,7 +90,7 @@ public class Detective {
      * @param file Файл, откуда надо считывать данные.
      * @return Истина, если данный день является днём самостоятельных работ, или же если в дне нет записей. Иначе: False.
      */
-    private static boolean IsDayFree(Point titleOfDay, int CountCouples, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws IOException {
+    private static boolean IsDayFree(Point titleOfDay, int CountCouples, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws Exception {
         for(int i = titleOfDay.y; i < titleOfDay.y + CountCouples*2; i++) {
             if(!file.getCellData(titleOfDay.x, i).isEmpty())
             {
@@ -116,7 +116,7 @@ public class Detective {
      * @param file Файл, откуда надо считывать данные.
      * @return Адрес местоположения пары.
      */
-    private static String GetAddressOfDay(Point titleOfDay, int CountCouples, String DefaultAddress, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws IOException {
+    private static String GetAddressOfDay(Point titleOfDay, int CountCouples, String DefaultAddress, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws Exception {
         String output;
         for(int y = titleOfDay.y; y < titleOfDay.y + CountCouples*2; y++)
             if(file.getCellData(titleOfDay.x, y).equals("Занятия по адресу:")) {
@@ -135,7 +135,7 @@ public class Detective {
      * @param file Файл, в котором следует искать.
      * @return Координаты первого найденного слова "Предмет".
      */
-    private static Point SeekFirstCouple(ExcelFileInterface file) throws DetectiveException {
+    private static Point SeekFirstCouple(ExcelFileInterface file) throws Exception {
         try {
             return SeekEverythingInLeftUp("Предмет", file);
         }
@@ -151,7 +151,7 @@ public class Detective {
      * @return Координаты первого найденного слова "Предмет".
      * @throws DetectiveException Упс! Не нашёл!
      */
-    private static Point SeekEverythingInLeftUp(String Word, ExcelFileInterface file) throws DetectiveException, IOException {
+    private static Point SeekEverythingInLeftUp(String Word, ExcelFileInterface file) throws Exception {
         for(int y = 1; y <= 10; y++)
             for(int x = 1; x <= 20; x++)
                 if(file.getCellData(x, y).equals(Word)) return new Point(x, y);
@@ -250,7 +250,7 @@ public class Detective {
      * @return Количество пар в одном дне недели.
      * @throws DetectiveException
      */
-    private static int GetCountCoupleInDay(Point CR, ExcelFileInterface file) throws DetectiveException, IOException {
+    private static int GetCountCoupleInDay(Point CR, ExcelFileInterface file) throws Exception {
         int OldNumber = Integer.MIN_VALUE; // Последнее число, которое было прочитано.
         int output = 0;
         int x = CR.x - 3; // Остаёмся на одном и том же столбце!

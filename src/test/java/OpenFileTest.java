@@ -12,7 +12,7 @@ import static junit.framework.Assert.*;
 
 public class OpenFileTest {
     @Test
-    public void testOpenXLS() throws IOException {
+    public void testOpenXLS() throws Exception {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("1");
 
@@ -38,7 +38,8 @@ public class OpenFileTest {
         assertEquals("Error 1:2(AБ)", "АБ", openFile.getCellData(1,2));
         assertEquals("Error 2:1(БА)", "БА", openFile.getCellData(2,1));
         assertEquals("Error 2:2(Груша)", "Груша", openFile.getCellData(2,2));
-
+        assertEquals("Error -1:-1(null)", null, openFile.getCellData(-1,-1));
+        assertEquals("Error 999:999( )", " ", openFile.getCellData(999,999));
 
     }
 }
