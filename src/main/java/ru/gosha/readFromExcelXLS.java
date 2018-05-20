@@ -29,15 +29,9 @@ class readFromExcelXLS implements ExcelFileInterface {
         String name = null;
         HSSFSheet myExcelSheet = myExcelBook.getSheet("1");
         HSSFRow row = myExcelSheet.getRow(Row - 1);
-        if (Column < 0 || Row < 0)
-            name = null;
-        else {
-            if (row == null)
-                name = " ";
-            else {
-                if(row.getCell(Column - 1).getCellType() == HSSFCell.CELL_TYPE_STRING)
-                    name = row.getCell(Column - 1).getStringCellValue();
-            }
+
+        if(row.getCell(Column - 1).getCellType() == HSSFCell.CELL_TYPE_STRING){
+            name = row.getCell(Column - 1).getStringCellValue();
         }
 
         return name;

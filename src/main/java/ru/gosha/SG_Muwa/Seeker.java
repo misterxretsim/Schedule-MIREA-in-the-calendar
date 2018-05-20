@@ -1,3 +1,5 @@
+package ru.gosha.SG_Muwa;
+
 // TODO: Надо доделать 1 функцию.
 
 import java.util.Date;

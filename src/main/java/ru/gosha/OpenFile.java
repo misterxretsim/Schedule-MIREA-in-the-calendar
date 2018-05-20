@@ -46,7 +46,7 @@ public class OpenFile implements ExcelFileInterface {
     }
 
     @Override
-    public String getCellData(int Column, int Row) throws Exception {
+    public String getCellData(int Column, int Row) throws IOException {
         if (xls){
             readXLS = new readFromExcelXLS(myExcelBookXLS);
             result = readXLS.getCellData(Column,Row);

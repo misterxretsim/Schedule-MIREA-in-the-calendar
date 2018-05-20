@@ -15,7 +15,7 @@ public class InputSeeker{
      * @throws ParseException
      */
 
-    public Seeker setSeeker() throws ParseException {
+    public static Seeker setSeeker() throws ParseException {
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         Scanner scanner = new Scanner(System.in);
         String teacher = null;
@@ -49,6 +49,6 @@ public class InputSeeker{
         //System.out.println(nameOfSeeker +" "+ teacher+" "+ studyGroup+" "+dateStart+" "+dateFinish+" "+defaultAddress);
 
 
-        return new Seeker(nameOfSeeker, new SeekerType(teacher, studyGroup), dateStart, dateFinish ,defaultAddress);
+        return new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup: SeekerType.Teacher, dateStart, dateFinish ,defaultAddress);
     }
 }

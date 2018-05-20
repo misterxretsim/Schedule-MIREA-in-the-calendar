@@ -9,15 +9,15 @@ public class Main {
         OpenFile openFileXLS = new OpenFile("delete1.xls");
         System.out.println(openFileXLS.getCellData(1,1));
         System.out.println(openFileXLS.getCellData(1,2));
-        System.out.println(openFileXLS.getCellData(2,1));
-        System.out.println(openFileXLS.getCellData(5,5));
+        System.out.println(openFileXLS.getCellData(2,2));
+        System.out.println(openFileXLS.getCellData(2,2));
         openFileXLS.close();
 
         InputSeeker inputSeeker = new InputSeeker();
         Seeker seeker = inputSeeker.setSeeker();
         System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");
-        System.out.print(seeker.dateFinish+" "+seeker.seekerType.getStudyGroup()+" ");
-        System.out.print(seeker.seekerType.getTeacher());
+        System.out.print(seeker.dateFinish+" "+seeker.seekerType.StudyGroup +" ");
+        System.out.print(seeker.seekerType.Teacher);
 
 
     }
