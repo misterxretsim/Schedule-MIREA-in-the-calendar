@@ -1,5 +1,3 @@
-package ru.gosha.SG_Muwa;
-
 import java.io.Closeable;
 import java.io.IOException;
 
