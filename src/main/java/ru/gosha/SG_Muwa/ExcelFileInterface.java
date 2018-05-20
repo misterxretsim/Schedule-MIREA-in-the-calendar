@@ -12,6 +12,6 @@ public interface ExcelFileInterface extends Closeable {
      * @param Row Порядковый номер строки. Отсчёт начинается с 1.
      * @return Текстовые данные в ячейке.
      */
-    String getCellData(int Column, int Row) throws IOException;
+    String getCellData(int Column, int Row) throws IOException, Exception;
 
 }
