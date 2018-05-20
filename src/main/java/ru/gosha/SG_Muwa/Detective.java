@@ -1,4 +1,6 @@
-package ru.gosha.SG_Muwa;
+// TODO: Надо доделать 2 функции.
+
+
 /*
 План детектива:
 0. Узнаю список времён: Начала и окончания пар.
@@ -25,6 +27,8 @@ public class Detective {
      * Функция ищет занятия для seeker в файлах files.
      * @param seeker критерий поиска.
      * @param files список файлов, в которых требуется искать пары занятий.
+     * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
+     * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
     public static void StartAnInvestigations(Seeker seeker, Iterable<ExcelFileInterface> files) throws Exception {
         for(ExcelFileInterface f : files) StartAnInvestigation(seeker, f);
@@ -35,6 +39,8 @@ public class Detective {
      * Функция ищет занятия для seeker в файле File.
      * @param seeker критерий поиска.
      * @param file файл, в котором требуется искать пары занятий.
+     * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
+     * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
     public static void StartAnInvestigation(Seeker seeker, ExcelFileInterface file) throws Exception {
         Point WeekPositionFirst = SeekEverythingInLeftUp("Неделя", file);
@@ -66,12 +72,14 @@ public class Detective {
                     Point cursor = new Point(posEntryX, basePos.y + 1 + DayOfTheWeek * CountCouples);
                     if(IsDayFree(cursor, CountCouples, IgnoresCoupleTitle, file)) continue; // Если день свободен, то ничего не добавляем.
                     String Address = GetAddressOfDay(cursor, CountCouples, seeker.DefaultAddress, IgnoresCoupleTitle, file);
-                    for (Couple couple : GetCouplesFromAnchor(posEntryX, basePos.y, CountCouples, seeker, IgnoresCoupleTitle, file)) {
+                    for (Couple couple : GetCouplesFromAnchor(posEntryX, basePos.y, seeker, Times, IgnoresCoupleTitle, file)) {
                         // Хорошо! Мы получили список занятий у группы. Если это группа - то просто добавить, если это преподаватель - то отфильтровать.
 
                     }
                 }
         }
+        // TODO: Функционал не доделан.
+        return;
     }
 
     /**
@@ -116,7 +124,8 @@ public class Detective {
                 IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
                 IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
             }
-            return null; //ДОБАВИЛ НУЛЛ
+            // TODO: доделать функционал и проверить.
+        return null;
     }
 
     /**
@@ -151,19 +160,30 @@ public class Detective {
 
     /**
      * Идёт считывание данных о предметах с определённого положения "Предмет".
-     * @param Column Столбец, где находится "Якорь" то есть ячейка с записью "Предмет".
-     * @param Row Строка, где находится "Якорь" то есть ячейка с записью "Предмет".
-     * @param CountOfCouples Количество пар в одном дне.
+     * @param column Столбец, где находится "Якорь" то есть ячейка с записью "Предмет".
+     * @param row Строка, где находится "Якорь" то есть ячейка с записью "Предмет".
      * @param seeker Отсюда берётся начало и конец семестра.
-     * @param IgnoresCoupleTitle Лист занятий, который надо игнорировать.
+     * @param times Отсюда берётся расписание времени в формате началок - конец. На все пары.
+     * @param ignoresCoupleTitle Лист занятий, который надо игнорировать.
      * @param file Файл, откуда надо производить чтение.
      * @return Множество занятий у группы.
      */
-    private static Collection<? extends Couple> GetCouplesFromAnchor(int Column, int Row, int CountOfCouples, Seeker seeker, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws Exception {
+    private static Collection<? extends Couple> GetCouplesFromAnchor(int column, int row, Seeker seeker, int[] times, List<Point> ignoresCoupleTitle, ExcelFileInterface file) throws IOException {
         LinkedList<Couple> coupleOfWeek = new LinkedList<>();
-        for(int dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++)
+        int countOfCouples = times.length / 2;
+        for(byte dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++)
         {
-            coupleOfWeek.addAll(GetCouplesFromDay(Column, (Row + 1) + (dayOfWeek - 1) * CountOfCouples * 2, CountOfCouples, dayOfWeek, seeker, IgnoresCoupleTitle, file));
+            int c = column;
+            int r = (row + 1) + (dayOfWeek - 1) * countOfCouples * 2;
+            coupleOfWeek.addAll(
+                    GetCouplesFromDay
+                            (c, r, dayOfWeek, seeker, ignoresCoupleTitle, times,
+                                    GetAddressOfDay
+                                            (new Point(c, r), countOfCouples, seeker.DefaultAddress, ignoresCoupleTitle, file
+                                            ),
+                                    file
+                            )
+            );
         }
         return coupleOfWeek;
     }
@@ -172,22 +192,40 @@ public class Detective {
      * Идёт считывание данных о предметах с определённого положения: первая пара в дне.
      * @param column Столбец, где находится "Якорь" то есть ячейка с записью "Предмет".
      * @param row Строка, где находится "Якорь" то есть ячейка с записью "Предмет".
-     * @param countOfCouples Количество пар в одном дне.
      * @param dayOfWeek День недели.
      * @param seeker Отсюда берётся начало и конец семестра.
      * @param ignoresCoupleTitle Лист занятий, который надо игнорировать.
+     * @param times Лист с началом и окончанием пары. {Начало1пары, конец1пары, начало2пары, конец2пары, ...}
+     * @param address Адрес, где находятся пары
      * @param file Файл, откуда надо производить чтение.
      * @return Множество занятий у группы в конкретный день.
      */
-    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, int countOfCouples, int dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, ExcelFileInterface file) throws Exception {
+    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, byte dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, int[] times, String address, ExcelFileInterface file) throws IOException {
         LinkedList<Couple> coupleOfDay = new LinkedList<>();
-        for(Point cursor = new Point(column, row); cursor.y < row + countOfCouples*2; cursor.y++)
-        {
-            if(IsEqualsInList(ignoresCoupleTitle, cursor)) continue; // Если такая запись под игнором, то игнорируем, ничего не делаем.
-            String[] titles = file.getCellData(column, row).trim().split("\r\n|\n"); // Регулярное выражение. Делать новую строку либо от \r\n либо от \n. Универсально!
-
+        int countOfCouples = times.length / 2;
+        for(Point cursor = new Point(column, row); cursor.y < row + countOfCouples*2; cursor.y++) { // Считываем каждую строчку
+            if (IsEqualsInList(ignoresCoupleTitle, cursor))
+                continue; // Если такая запись под игнором, то игнорируем, ничего не делаем.
+            String[] titles = file.getCellData(cursor.x, cursor.y).trim().split("\r\n|\n"); // Регулярное выражение. Делать новую строку либо от \r\n либо от \n. Универсально!
+            String[] typeOfLessons = file.getCellData(cursor.x + 1, cursor.y).trim().split("\r\n|\n");
+            String[] teachers = file.getCellData(cursor.x + 2, cursor.y).trim().split(("\r\n|\n"));
+            String[] audiences = file.getCellData(cursor.x + 3, cursor.y).trim().split(("\r\n|\n"));
+            for (int indexInLine = 0; indexInLine < titles.length; indexInLine++) {
+                Iterable<Couple> listCouplesOfLine = Couple.GetCouplesByPeriod(seeker.dateStart,
+                        seeker.dateFinish,
+                        times,
+                        dayOfWeek,
+                        titles[indexInLine],
+                        indexInLine < typeOfLessons.length ? typeOfLessons[indexInLine] : typeOfLessons[0],
+                        indexInLine < teachers.length ? teachers[indexInLine] : teachers[0],
+                        indexInLine < audiences.length ? audiences[indexInLine] : audiences[0],
+                        address,
+                        cursor.y - row);
+                if(listCouplesOfLine != null) for (Couple coup : listCouplesOfLine)
+                    coupleOfDay.add(coup); // Все пары, которые вернусь с GetCouplesByPeriod надо добавить в наш список.
+            }
         }
-        return null;
+        return coupleOfDay;
     }
 
 
@@ -237,7 +275,7 @@ public class Detective {
      * @param file Excel файл.
      * @return Возвращает список времён в формате минут: {начало пары, конец пары}.
      */
-    private static int[] GetTimes(Point CR, ExcelFileInterface file) throws Exception {
+    private static int[] GetTimes(Point CR, ExcelFileInterface file) throws  DetectiveException, IOException {
         int[] output = new int[2 * GetCountCoupleInDay(CR, file)];
         if(output.length == 0)
             throw new DetectiveException("Ошибка при поиске время начала и конца пар -> Пока программа спускалась вниз по строкам, считая, сколько пар в одном дне, она прошла окола 100 строк и сказала идити вы все, я столько не хочу обрабатывать.");
@@ -249,7 +287,7 @@ public class Detective {
                 output[indexArray++] = GetMinutesFromTimeString(file.getCellData(x, y));
         return output;
     }
-    
+
     /**
      * Конвектирует время в формате HH-MM или HH:MM в минуты.
      * @param inputT Входящее время в строковом представлении.
