@@ -31,9 +31,15 @@ public class readFromExcelXLSX implements ExcelFileInterface{
         String name = null;
         XSSFSheet myExcelSheet = myExcelBook.getSheet("1");
         XSSFRow row = myExcelSheet.getRow(Row - 1);
-
-        if(row.getCell(Column - 1).getCellType() == XSSFCell.CELL_TYPE_STRING){
-            name = row.getCell(Column - 1).getStringCellValue();
+        if (Column < 0 || Row < 0)
+            name = null;
+        else {
+            if (row == null)
+                name = " ";
+            else {
+                if(row.getCell(Column - 1).getCellType() == XSSFCell.CELL_TYPE_STRING)
+                    name = row.getCell(Column - 1).getStringCellValue();
+            }
         }
 
         return name;
