@@ -16,8 +16,7 @@ public class Main {
         InputSeeker inputSeeker = new InputSeeker();
         Seeker seeker = inputSeeker.setSeeker();
         System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");
-        System.out.print(seeker.dateFinish+" "+seeker.seekerType.getStudyGroup()+" ");
-        System.out.print(seeker.seekerType.getTeacher());
+        System.out.print(seeker.dateFinish+" "+seeker.seekerType + " ");
 
 
     }

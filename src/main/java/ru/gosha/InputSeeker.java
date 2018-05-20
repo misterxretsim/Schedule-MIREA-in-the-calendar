@@ -49,6 +49,6 @@ public class InputSeeker{
         //System.out.println(nameOfSeeker +" "+ teacher+" "+ studyGroup+" "+dateStart+" "+dateFinish+" "+defaultAddress);
 
 
-        return new Seeker(nameOfSeeker, new SeekerType(teacher, studyGroup), dateStart, dateFinish ,defaultAddress);
+        return new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish ,defaultAddress);
     }
 }

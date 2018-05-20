@@ -1,8 +1,7 @@
-import jdk.jshell.spi.ExecutionControl;
+package ru.gosha.SG_Muwa;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
+
 
 public class Couple {
     // Дата и время пары.

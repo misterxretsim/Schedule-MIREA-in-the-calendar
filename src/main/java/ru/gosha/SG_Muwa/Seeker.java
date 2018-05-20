@@ -1,5 +1,7 @@
 // TODO: Надо доделать 1 функцию.
 
+package ru.gosha.SG_Muwa;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
