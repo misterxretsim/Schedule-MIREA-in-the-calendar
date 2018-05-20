@@ -2,6 +2,7 @@ package ru.gosha.SG_Muwa;
 
 import java.util.Date;
 
+
 public class Couple {
     // Дата и время пары.
     public Date DateAndTimeOfCouple;
