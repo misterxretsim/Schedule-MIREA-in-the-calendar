@@ -1,37 +1,67 @@
 package ru.gosha;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.gosha.SG_Muwa.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
-public class OpenFile {
+public class OpenFile implements ExcelFileInterface {
 
-    /**
-     * Функция определяет тип Excel файла(xls/xlsx)!!!!!ДОДЕЛАТЬ!!!!!!!
-     * @param fileName название/путь файла.
-     * @return возвращает значение ячейки Excel файла.
-     * @throws IOException О ДА!
-     */
-    public String Open(String fileName, int Column, int Row) throws IOException {
-        String type = null;
-        String result = null;
+    HSSFWorkbook myExcelBookXLS = null;
+    XSSFWorkbook myExcelBookXLSX = null;
+    private boolean xls = false;
+    private boolean xlsx = false;
+    private String type = null;
+    private String result = null;
+    FileInputStream fileInputStream = null;
+    ExcelFileInterface readXLS = null;
+    ExcelFileInterface readXLSX = null;
+
+
+    public OpenFile(String fileName) throws IOException {
+        fileInputStream = new FileInputStream(fileName);
+
         for (int i = 0; i < fileName.length(); i++){
             if (fileName.charAt(i) == '.'){
                 type = fileName.substring(i + 1, fileName.length());
             }
         }
 
-        if (type.equals("xlsx")) {
-            ExcelFileInterface read1 = new  readFromExcelXLSX(fileName);
-            result = read1.getCellData(Column,Row);
+        if (type.equals("xlsx")){
+            myExcelBookXLSX = new XSSFWorkbook(fileInputStream);
+            xlsx = true;
+            xls = false;
         }else {
             if (type.equals("xls")){
-                ExcelFileInterface read = new readFromExcelXLS(fileName);
-                result = read.getCellData(Column,Row);
+                myExcelBookXLS = new HSSFWorkbook(fileInputStream);
+                xls = true;
+                xlsx = false;
             }
         }
-        System.out.println(type);
+
+    }
+
+    @Override
+    public String getCellData(int Column, int Row) throws IOException {
+        if (xls){
+            readXLS = new readFromExcelXLS(myExcelBookXLS);
+            result = readXLS.getCellData(Column,Row);
+        } else {
+            if (xlsx){
+                readXLSX = new readFromExcelXLSX(myExcelBookXLSX);
+                result = readXLSX.getCellData(Column,Row);
+            }
+        }
         return result;
+    }
+
+    @Override
+    public void close() throws IOException {
+        fileInputStream.close();
+
     }
 }
