@@ -51,6 +51,11 @@ public class Couple {
     public static Iterable<Couple> GetCouplesByPeriod(Date Start, Date Finish, int[] TimeOfCouples, byte DayOfTheWeek, String nameOfGroup, String ItemTitle, String TypeOfLesson, String NameOfTeacher, String Audience, String Address, int NumberOfCoupleDouble) {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
+        ItemTitle = ItemTitle.trim();
+        if(ItemTitle.contains("н."))
+        {
+            if(ItemTitle.contains("кр."));
+        }
         return null;
     }
 }
