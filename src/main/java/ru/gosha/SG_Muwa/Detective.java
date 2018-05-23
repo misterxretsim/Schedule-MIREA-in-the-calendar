@@ -1,5 +1,3 @@
-// TODO: Надо доделать 2 функции.
-
 package ru.gosha.SG_Muwa;
 
 /*
@@ -47,7 +45,7 @@ public class Detective {
         Point WeekPositionFirst = SeekEverythingInLeftUp("Неделя", file);
         List<Point> IgnoresCoupleTitle = new LinkedList<>();
         int[] Times = GetTimes(WeekPositionFirst, file); // Узнать время начала и конца пар.
-        int CountCouples = GetCountCoupleInDay(WeekPositionFirst, file); // Узнать количество пар.
+        int CountCouples = Times.length / 2; // Узнать количество пар за день.
         Point basePos;
         try {
             basePos = SeekFirstCouple(file); // Позиция первой записи "Предмет".
@@ -73,14 +71,34 @@ public class Detective {
                     Point cursor = new Point(posEntryX, basePos.y + 1 + DayOfTheWeek * CountCouples);
                     if(IsDayFree(cursor, CountCouples, IgnoresCoupleTitle, file)) continue; // Если день свободен, то ничего не добавляем.
                     String Address = GetAddressOfDay(cursor, CountCouples, seeker.DefaultAddress, IgnoresCoupleTitle, file);
-                    for (Couple couple : GetCouplesFromAnchor(posEntryX, basePos.y, seeker, Times, IgnoresCoupleTitle, file)) {
-                        // Хорошо! Мы получили список занятий у группы. Если это группа - то просто добавить, если это преподаватель - то отфильтровать.
-
-                    }
+                    seeker.Couples = FilterCouplesBySeekerType(
+                            GetCouplesFromAnchor(posEntryX, basePos.y, seeker, Times, IgnoresCoupleTitle, file) /* Хорошо! Мы получили список занятий у группы. Если это группа - то просто добавить, если это преподаватель - то отфильтровать. */,
+                            seeker
+                    );
                 }
         }
-        // TODO: Функционал не доделан.
-        return;
+    }
+
+    /**
+     * Фильтрует пары по типу запроса.
+     * @param couples Список пар.
+     * @param seeker Критерий (Тип искателя и его название)
+     * @return Отфильтрованный по критерию.
+     */
+    private static List<Couple> FilterCouplesBySeekerType(Collection<? extends Couple> couples, final Seeker seeker) {
+        List<Couple> output = new LinkedList<>();
+        for (Couple i : couples) {
+            if (seeker.seekerType == SeekerType.StudyGroup) {
+                if (i.NameOfGroup.toLowerCase().equals(seeker.NameOfSeeker.toLowerCase())) {
+                    output.add(i);
+                }
+            } else {
+                if (i.NameOfTeacher.toLowerCase().equals(seeker.NameOfSeeker.toLowerCase())) {
+                    output.add(i);
+                }
+            }
+        }
+        return output;
     }
 
     /**
@@ -118,15 +136,14 @@ public class Detective {
      * @return Адрес местоположения пары.
      */
     private static String GetAddressOfDay(Point titleOfDay, int CountCouples, String DefaultAddress, List<Point> IgnoresCoupleTitle, ExcelFileInterface file) throws IOException {
-        String output;
+        String output = DefaultAddress; // Если никакой не найдётся, будет DefaultAddress.
         for(int y = titleOfDay.y; y < titleOfDay.y + CountCouples*2; y++)
-            if(file.getCellData(titleOfDay.x, y).equals("Занятия по адресу:")) {
+            if(file.getCellData(titleOfDay.x, y).trim().equals("Занятия по адресу:")) {
                 output = file.getCellData(titleOfDay.x, y + 1);
                 IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
-                IgnoresCoupleTitle.add(new Point(titleOfDay.x, y));
+                IgnoresCoupleTitle.add(new Point(titleOfDay.x, y + 1));
             }
-            // TODO: доделать функционал и проверить.
-        return null;
+        return output;
     }
 
     /**
@@ -172,13 +189,14 @@ public class Detective {
     private static Collection<? extends Couple> GetCouplesFromAnchor(int column, int row, Seeker seeker, int[] times, List<Point> ignoresCoupleTitle, ExcelFileInterface file) throws IOException {
         LinkedList<Couple> coupleOfWeek = new LinkedList<>();
         int countOfCouples = times.length / 2;
+        String nameOfGroup = file.getCellData(column, row - 1).trim();
         for(byte dayOfWeek = 1; dayOfWeek <= 7; dayOfWeek++)
         {
             int c = column;
             int r = (row + 1) + (dayOfWeek - 1) * countOfCouples * 2;
             coupleOfWeek.addAll(
                     GetCouplesFromDay
-                            (c, r, dayOfWeek, seeker, ignoresCoupleTitle, times,
+                            (c, r, nameOfGroup, dayOfWeek, seeker, ignoresCoupleTitle, times,
                                     GetAddressOfDay
                                             (new Point(c, r), countOfCouples, seeker.DefaultAddress, ignoresCoupleTitle, file
                                             ),
@@ -193,6 +211,7 @@ public class Detective {
      * Идёт считывание данных о предметах с определённого положения: первая пара в дне.
      * @param column Столбец, где находится "Якорь" то есть ячейка с записью "Предмет".
      * @param row Строка, где находится "Якорь" то есть ячейка с записью "Предмет".
+     * @param nameOfGroup Имя группы.
      * @param dayOfWeek День недели.
      * @param seeker Отсюда берётся начало и конец семестра.
      * @param ignoresCoupleTitle Лист занятий, который надо игнорировать.
@@ -201,7 +220,7 @@ public class Detective {
      * @param file Файл, откуда надо производить чтение.
      * @return Множество занятий у группы в конкретный день.
      */
-    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, byte dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, int[] times, String address, ExcelFileInterface file) throws IOException {
+    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, String nameOfGroup, byte dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, int[] times, String address, ExcelFileInterface file) throws IOException {
         LinkedList<Couple> coupleOfDay = new LinkedList<>();
         int countOfCouples = times.length / 2;
         for(Point cursor = new Point(column, row); cursor.y < row + countOfCouples*2; cursor.y++) { // Считываем каждую строчку
@@ -216,6 +235,7 @@ public class Detective {
                         seeker.dateFinish,
                         times,
                         dayOfWeek,
+                        nameOfGroup,
                         titles[indexInLine],
                         indexInLine < typeOfLessons.length ? typeOfLessons[indexInLine] : typeOfLessons[0],
                         indexInLine < teachers.length ? teachers[indexInLine] : teachers[0],
