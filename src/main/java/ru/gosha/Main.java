@@ -12,7 +12,7 @@ public class Main {
         System.out.println(openFileXLS.getCellData(2,1));
         System.out.println(openFileXLS.getCellData(5,5));
         openFileXLS.close();
-
+//
         InputSeeker inputSeeker = new InputSeeker();
         Seeker seeker = inputSeeker.setSeeker();
         System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");
