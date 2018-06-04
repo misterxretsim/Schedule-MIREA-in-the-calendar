@@ -1,12 +1,13 @@
 package ru.gosha;
-
+import ru.gosha.SG_Muwa.Seeker;
+import ru.gosha.SG_Muwa.SeekerType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public class InputSeeker {
+public class InputSeeker{
 
     /**
      * Функция работает с пользователем для ввода данных

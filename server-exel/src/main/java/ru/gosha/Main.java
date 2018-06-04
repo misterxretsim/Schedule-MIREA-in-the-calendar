@@ -6,7 +6,7 @@ import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        OpenFile openFileXLS = new OpenFile("/Users/georgijfalileev/IdeaProjects/untitled/client-exel/delete1.xls");
+        OpenFile openFileXLS = new OpenFile("/Users/georgijfalileev/IdeaProjects/untitled/server-exel/delete1.xls");
         System.out.println(openFileXLS.getCellData(1,1));
         System.out.println(openFileXLS.getCellData(1,2));
         System.out.println(openFileXLS.getCellData(2,1));
