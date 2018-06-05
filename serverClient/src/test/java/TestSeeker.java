@@ -22,6 +22,15 @@ public class TestSeeker {
         assertEquals(LocalDate.of(2000, 5, 10), test.dateFinish);
         assertEquals(10800, test.timezone);
         assertEquals("Москва, проспект Вернадского, 78, РТУ МИРЭА", test.DefaultAddress);
+
+        PackagePerClient cl = new PackagePerClient(new byte[]{0, 0}, 0);
+        assertArrayEquals(new byte[]{0, 0}, cl.CalFile);
+        assertEquals(0, cl.Count);
+
+        PackagePerServer sv = new PackagePerServer(new byte[][] {{0, 0}}, test);
+
+        assertEquals(test, sv.QueryCriteria);
+        assertArrayEquals(new byte[][] {{0, 0}}, sv.ExcelsFiles);
     }
 
 
