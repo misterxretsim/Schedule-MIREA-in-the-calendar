@@ -6,7 +6,7 @@ package ru.gosha.serverClient;
 
 import java.io.*;
 
-public class PackagePerClient implements Serializable {
+public class PackageToClient implements Serializable {
 
     /**
      * Тут содержатся файл .iCal.
@@ -28,7 +28,7 @@ public class PackagePerClient implements Serializable {
      @param CalFile Тут содержатся файл .iCal.
      @param Count Тут содержится количество созданных мероприятий.
      */
-    public PackagePerClient(byte[] CalFile, int Count, String Messages) {
+    public PackageToClient(byte[] CalFile, int Count, String Messages) {
         this.CalFile = CalFile;
         this.Count = Count;
         this.Messages = Messages;

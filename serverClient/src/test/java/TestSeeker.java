@@ -23,12 +23,12 @@ public class TestSeeker {
         assertEquals(10800, test.timezone);
         assertEquals("Москва, проспект Вернадского, 78, РТУ МИРЭА", test.DefaultAddress);
 
-        PackagePerClient cl = new PackagePerClient(new byte[]{0, 0}, 0, "Всё ок");
+        PackageToClient cl = new PackageToClient(new byte[]{0, 0}, 0, "Всё ок");
         assertArrayEquals(new byte[]{0, 0}, cl.CalFile);
         assertEquals(0, cl.Count);
         assertEquals("Всё ок", cl.Messages);
 
-        PackagePerServer sv = new PackagePerServer(new byte[][] {{0, 0}}, test);
+        PackageToServer sv = new PackageToServer(new byte[][] {{0, 0}}, test);
 
         assertEquals(test, sv.QueryCriteria);
         assertArrayEquals(new byte[][] {{0, 0}}, sv.ExcelsFiles);
