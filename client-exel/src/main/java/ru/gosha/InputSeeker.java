@@ -1,10 +1,14 @@
 package ru.gosha;
 
+import ru.gosha.serverClient.Seeker;
+import ru.gosha.serverClient.SeekerType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class InputSeeker {
 
@@ -22,8 +26,9 @@ public class InputSeeker {
         String date = null;
         String nameOfSeeker = null;
         String defaultAddress = null;
-        Date dateStart;
-        Date dateFinish;
+        LocalDate dateStart;
+        LocalDate dateFinish;
+        TimeZone timeZone = null;
 
         System.out.print("nameOfSeeker: ");
         nameOfSeeker = scanner.nextLine();
@@ -36,11 +41,11 @@ public class InputSeeker {
 
         System.out.print("dateStart yyyy-MM-dd: ");
         date = scanner.nextLine();
-        dateStart = ft.parse(date);
+        dateStart = LocalDate.parse(date);
 
         System.out.print("dateFinish yyyy-MM-dd: ");
         date = scanner.nextLine();
-        dateFinish = ft.parse(date);
+        dateFinish = LocalDate.parse(date);
 
         System.out.print("defaultAddress: ");
         defaultAddress = scanner.nextLine();
@@ -48,6 +53,6 @@ public class InputSeeker {
         //System.out.println(nameOfSeeker +" "+ teacher+" "+ studyGroup+" "+dateStart+" "+dateFinish+" "+defaultAddress);
 
 
-        return new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish ,defaultAddress);
+        return new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish , timeZone, defaultAddress);
     }
 }

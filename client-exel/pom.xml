@@ -26,7 +26,7 @@
         </dependency>
 		<dependency>
 			<groupId>ru.gosha</groupId>
-            <artifactId>ru.gosha.server-client</artifactId>
+            <artifactId>ru.gosha.serverClient</artifactId>
             <version>0.1</version>
 		</dependency>
     </dependencies>
