@@ -6,11 +6,7 @@
 
 package ru.gosha.serverClient;
 
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class Seeker {
     /**
@@ -30,9 +26,9 @@ public class Seeker {
      */
     public final LocalDate dateFinish;
     /**
-     * Часовой пояс, в котором указано время в расписании.
+     * Часовой пояс, в котором указано время в расписании. Указывается в секундах.
      */
-    public final TimeZone timezone;
+    public final int timezone;
     /**
      * Адрес кампуса по-умолчанию.
      */
@@ -44,12 +40,12 @@ public class Seeker {
      * Создаёт экземпляр запроса.
      * @param nameOfSeeker Имя искателя. Это либо имя преподавателя, либо имя студента.
      * @param seekerType Тип искателя. Это либо преподаватель, либо студент.
-     * @param dateStart Дата начала составления расписания. С какого календарного дня надо составлять расписание?
-     * @param dateFinish Дата конца составления расписания. До какого календарного дня надо составлять расписание?
-     * @param timezone Часовой пояс, в котором указано время в расписании.
+     * @param dateStart Дата начала составления расписания. С какого календарного дня надо составлять расписание? Дата указывается по местному времени.
+     * @param dateFinish Дата конца составления расписания. До какого календарного дня надо составлять расписание? Дата указывается по местному времени.
+     * @param timezone Часовой пояс, в котором указано время в расписании. Указывается в секундах. Например, UTC+3:00 указывается как +3 * 60 * 60. Пользователя надо обязательно спросить, переходит ли на зимнее/летнее часы! Если да, то хитро манипулировать датами, чтобы часовой пояс был верен.
      * @param defaultAddress Какой адрес корпуса по-умолчанию?
      */
-    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, TimeZone timezone, String defaultAddress) {
+    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, int timezone, String defaultAddress) {
         NameOfSeeker = nameOfSeeker;
         this.seekerType = seekerType;
         this.dateStart = dateStart;
