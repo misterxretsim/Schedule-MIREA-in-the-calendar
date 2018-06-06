@@ -1,4 +1,4 @@
-package ru.gosha.SG_Muwa;
+package ru.gosha.CouplesDetective;
 
 public class DetectiveException extends Exception {
     DetectiveException(String message){

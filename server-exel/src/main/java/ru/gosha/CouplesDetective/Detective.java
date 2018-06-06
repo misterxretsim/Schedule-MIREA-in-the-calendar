@@ -1,4 +1,4 @@
-package ru.gosha.SG_Muwa;
+package ru.gosha.CouplesDetective;
 
 /*
 План детектива:
@@ -12,6 +12,10 @@ package ru.gosha.SG_Muwa;
 5. Разбиваю по двум строкам в GetCouplesByPeriod. Исключающие строки отправляются как "".
 
  */
+
+import ru.gosha.CouplesDetective.xl.ExcelFileInterface;
+import ru.gosha.serverClient.Seeker;
+import ru.gosha.serverClient.SeekerType;
 
 import java.awt.*;
 import java.io.IOException;
@@ -29,8 +33,17 @@ public class Detective {
      * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
      * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
-    public static void StartAnInvestigations(Seeker seeker, Iterable<ExcelFileInterface> files) throws DetectiveException, IOException {
-        for(ExcelFileInterface f : files) StartAnInvestigation(seeker, f);
+    public static List<Couple> startAnInvestigations(Seeker seeker, Iterable<ExcelFileInterface> files) throws DetectiveException, IOException {
+        List<Couple> output = new LinkedList<>();
+        int index = 0;
+        for (ExcelFileInterface f : files)
+            try {
+                output.addAll(startAnInvestigation(seeker, f));
+                index++;
+            } catch (DetectiveException error) {
+                throw new DetectiveException("Ошибка в файле с индексом " + index + ":" + error.getMessage());
+            }
+        return output;
     }
 
 
@@ -41,7 +54,8 @@ public class Detective {
      * @throws DetectiveException Появилась проблема, связанная с обработкой Excel файла
      * @throws IOException Во время работы с Excel file - файл стал недоступен.
      */
-    public static void StartAnInvestigation(Seeker seeker, ExcelFileInterface file) throws DetectiveException, IOException {
+    public static List<Couple> startAnInvestigation(Seeker seeker, ExcelFileInterface file) throws DetectiveException, IOException {
+        List<Couple> output = new LinkedList<>();
         Point WeekPositionFirst = SeekEverythingInLeftUp("Неделя", file);
         List<Point> IgnoresCoupleTitle = new LinkedList<>();
         int[] Times = GetTimes(WeekPositionFirst, file); // Узнать время начала и конца пар.
@@ -53,7 +67,7 @@ public class Detective {
         } catch (DetectiveException e) {
             System.out.println(e.getMessage());
             System.err.println(e.getMessage());
-            return; // Нет пар в этом листе.
+            return new LinkedList<>(); // Нет пар в этом листе.
         }
         // Ура! Мы нашли базовую позицию!
         for(
@@ -70,13 +84,14 @@ public class Detective {
                     // Выставляем курсор на название первой пары дня.
                     Point cursor = new Point(posEntryX, basePos.y + 1 + DayOfTheWeek * CountCouples);
                     if(IsDayFree(cursor, CountCouples, IgnoresCoupleTitle, file)) continue; // Если день свободен, то ничего не добавляем.
-                    String Address = GetAddressOfDay(cursor, CountCouples, seeker.DefaultAddress, IgnoresCoupleTitle, file);
-                    seeker.Couples = FilterCouplesBySeekerType(
+                    String Address = GetAddressOfDay(cursor, CountCouples, seeker.defaultAddress, IgnoresCoupleTitle, file);
+                    return FilterCouplesBySeekerType(
                             GetCouplesFromAnchor(posEntryX, basePos.y, seeker, Times, IgnoresCoupleTitle, file) /* Хорошо! Мы получили список занятий у группы. Если это группа - то просто добавить, если это преподаватель - то отфильтровать. */,
                             seeker
                     );
                 }
         }
+        return new LinkedList<>();
     }
 
     /**
@@ -89,11 +104,11 @@ public class Detective {
         List<Couple> output = new LinkedList<>();
         for (Couple i : couples) {
             if (seeker.seekerType == SeekerType.StudyGroup) {
-                if (i.NameOfGroup.toLowerCase().equals(seeker.NameOfSeeker.toLowerCase())) {
+                if (i.NameOfGroup.toLowerCase().equals(seeker.nameOfSeeker.toLowerCase())) {
                     output.add(i);
                 }
             } else {
-                if (i.NameOfTeacher.toLowerCase().equals(seeker.NameOfSeeker.toLowerCase())) {
+                if (i.NameOfTeacher.toLowerCase().equals(seeker.nameOfSeeker.toLowerCase())) {
                     output.add(i);
                 }
             }
@@ -198,7 +213,7 @@ public class Detective {
                     GetCouplesFromDay
                             (c, r, nameOfGroup, dayOfWeek, seeker, ignoresCoupleTitle, times,
                                     GetAddressOfDay
-                                            (new Point(c, r), countOfCouples, seeker.DefaultAddress, ignoresCoupleTitle, file
+                                            (new Point(c, r), countOfCouples, seeker.defaultAddress, ignoresCoupleTitle, file
                                             ),
                                     file
                             )

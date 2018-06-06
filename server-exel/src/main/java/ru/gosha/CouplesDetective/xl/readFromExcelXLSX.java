@@ -1,14 +1,11 @@
-package ru.gosha;
+package ru.gosha.CouplesDetective.xl;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import ru.gosha.SG_Muwa.ExcelFileInterface;
-
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class readFromExcelXLSX implements ExcelFileInterface{

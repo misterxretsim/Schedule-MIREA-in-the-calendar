@@ -1,4 +1,4 @@
-package ru.gosha.SG_Muwa;
+package ru.gosha.CouplesDetective.xl;
 
 import java.io.Closeable;
 import java.io.IOException;

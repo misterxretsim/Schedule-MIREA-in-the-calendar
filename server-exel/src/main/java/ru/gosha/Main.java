@@ -1,24 +1,40 @@
 package ru.gosha;
 
-import ru.gosha.SG_Muwa.*;
-import java.io.IOException;
-import java.text.ParseException;
+import ru.gosha.Server.Server;
+import ru.gosha.Server.TaskExecutor;
+import ru.gosha.serverClient.PackageToClient;
+import ru.gosha.serverClient.PackageToServer;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        OpenFile openFileXLS = new OpenFile("/Users/georgijfalileev/IdeaProjects/untitled/server-exel/delete1.xls");
-        System.out.println(openFileXLS.getCellData(1,1));
-        System.out.println(openFileXLS.getCellData(1,2));
-        System.out.println(openFileXLS.getCellData(2,1));
-        System.out.println(openFileXLS.getCellData(5,5));
-        openFileXLS.close();
-//
-        InputSeeker inputSeeker = new InputSeeker();
-        Seeker seeker = inputSeeker.setSeeker();
-        System.out.print(seeker.DefaultAddress+" "+seeker.NameOfSeeker+" "+seeker.dateStart+" ");
-        System.out.print(seeker.dateFinish+" "+seeker.seekerType + " ");
+    public static int threadNumber = 10;
 
+    public static void main(String[] args) throws Exception
+    {
+        Queue<PackageToServer> qIn = new LinkedBlockingQueue<PackageToServer>();
+        Queue<PackageToClient> qOut = new ArrayDeque<PackageToClient>();
 
+        TaskExecutor taskExecutor = new TaskExecutor(qIn, qOut);
+        Thread[] threadExecutorArr = new Thread[threadNumber];
+        for (int i=0; i<threadNumber;++i)
+            threadExecutorArr[i] = new Thread(taskExecutor);
+
+        for (int i=0; i<threadNumber;++i)
+            threadExecutorArr[i].start();
+
+        int port;
+        if (args.length > 0)
+        {
+            port = Integer.parseInt(args[0]);
+        }
+        else
+        {
+            port = 60101;
+        }
+        new Server(port, qIn).start();
     }
 }
 
