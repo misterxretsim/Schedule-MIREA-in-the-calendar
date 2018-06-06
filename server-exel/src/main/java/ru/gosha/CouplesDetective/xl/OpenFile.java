@@ -1,11 +1,9 @@
-package ru.gosha;
+package ru.gosha.CouplesDetective.xl;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ru.gosha.SG_Muwa.*;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 

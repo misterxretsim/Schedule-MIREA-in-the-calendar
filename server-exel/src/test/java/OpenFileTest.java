@@ -1,14 +1,14 @@
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import ru.gosha.OpenFile;
+import ru.gosha.CouplesDetective.xl.*;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OpenFileTest {
     @Test
@@ -33,7 +33,7 @@ public class OpenFileTest {
         }
 
 
-        OpenFile openFile = new OpenFile("delete1.xls");
+        ExcelFileInterface openFile = new OpenFile("delete1.xls");
         assertEquals("Error 1:1(AA)", "АА", openFile.getCellData(1,1));
         assertEquals("Error 1:2(AБ)", "АБ", openFile.getCellData(1,2));
         assertEquals("Error 2:1(БА)", "БА", openFile.getCellData(2,1));

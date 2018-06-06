@@ -1,5 +1,6 @@
-package ru.gosha.SG_Muwa;
+package ru.gosha.CouplesDetective;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -48,7 +49,7 @@ public class Couple {
      * @param NumberOfCoupleDouble Какая это строка записи занятия? Первая строка пусть будет равна 0.
      * @return Возвращает, в какие дни будут пары.
      */
-    public static Iterable<Couple> GetCouplesByPeriod(Date Start, Date Finish, int[] TimeOfCouples, byte DayOfTheWeek, String nameOfGroup, String ItemTitle, String TypeOfLesson, String NameOfTeacher, String Audience, String Address, int NumberOfCoupleDouble) {
+    public static Iterable<Couple> GetCouplesByPeriod(LocalDate Start, LocalDate Finish, int[] TimeOfCouples, byte DayOfTheWeek, String nameOfGroup, String ItemTitle, String TypeOfLesson, String NameOfTeacher, String Audience, String Address, int NumberOfCoupleDouble) {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
         ItemTitle = ItemTitle.trim();
