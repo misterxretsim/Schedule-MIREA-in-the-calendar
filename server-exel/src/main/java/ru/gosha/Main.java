@@ -34,7 +34,7 @@ public class Main {
         {
             port = 60101;
         }
-        new Server(port, qIn).start();
+        new Server(60101, qIn).start();
     }
 }
 

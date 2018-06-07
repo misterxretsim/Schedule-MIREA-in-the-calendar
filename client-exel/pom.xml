@@ -26,9 +26,19 @@
         </dependency>
 		<dependency>
 			<groupId>ru.gosha</groupId>
-            <artifactId>ru.gosha.serverClient</artifactId>
+            <artifactId>serverClient</artifactId>
             <version>0.1</version>
 		</dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.25.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
     </dependencies>
 
     <properties>
