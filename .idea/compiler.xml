@@ -9,6 +9,7 @@
         <module name="client" />
         <module name="ru.gosha.serverClient" />
         <module name="server" />
+        <module name="serverClient" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
