@@ -6,6 +6,7 @@
     <groupId>ru.gosha</groupId>
     <artifactId>serverClient</artifactId>
     <version>0.1</version>
+    <packaging>jar</packaging>
 
     <parent>
         <artifactId>untitled</artifactId>
