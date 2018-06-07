@@ -15,9 +15,9 @@ import java.util.Queue;
 public class Server {
     private int port;
 
-    private Queue<PackageToServer> qIn;
+    private Queue<ID_Pack> qIn;
 
-    public Server(int port, Queue<PackageToServer> qIn)
+    public Server(int port, Queue<ID_Pack> qIn)
     {
         this.port = port;
         this.qIn = qIn;

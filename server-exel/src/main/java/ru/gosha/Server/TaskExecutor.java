@@ -1,5 +1,6 @@
 package ru.gosha.Server;
 
+import io.netty.channel.ChannelHandlerContext;
 import ru.gosha.CouplesDetective.ExportCouplesToICal;
 import ru.gosha.CouplesDetective.xl.ExcelFileInterface;
 import ru.gosha.CouplesDetective.xl.OpenFile;
@@ -19,8 +20,8 @@ public class TaskExecutor implements Runnable {
 
     private static final File pathToTemp;
     private static final Random ran = new Random();
-    private Queue<PackageToServer> qIn;
-    private Queue<PackageToClient> qOut;
+    private Queue<ID_Pack> qIn;
+    private Queue<ID_Pack> qOut;
 
     static {
         pathToTemp = new File(System.getProperty("java.io.tmpdir") + File.separator + "gosha");
@@ -42,7 +43,7 @@ public class TaskExecutor implements Runnable {
         file.delete();
     }
 
-    public TaskExecutor(Queue<PackageToServer> qIn, Queue<PackageToClient> qOut) {
+    public TaskExecutor(Queue<ID_Pack> qIn, Queue<ID_Pack> qOut) {
         this.qIn = qIn;
         this.qOut = qOut;
     }
@@ -53,26 +54,34 @@ public class TaskExecutor implements Runnable {
     }
 
     public void step() {
-        PackageToServer a;
+        ID_Pack message;
         List<Couple> couples;
-        a = poll();
+        message = poll();
+        PackageToServer a;
+        ChannelHandlerContext ctx = message.ctx;
+        if(message.data instanceof PackageToServer)
+            a = (PackageToServer) message.data;
+        else {
+            System.out.println("Error to convert to PackageToServer.");
+            return;
+        }
         try {
             couples = Detective.startAnInvestigations(a.QueryCriteria, extractsBytes(a.ExcelsFiles));
         } catch (IOException error) {
-            pull(new PackageToClient(new byte[0], 0, "Ошибка внутри сервера."));
+            pull(new ID_Pack(ctx, new PackageToClient(new byte[0], 0, "Ошибка внутри сервера.")));
             System.out.println("[ERROR] Почему папка temp не доступна??");
             return;
         } catch (DetectiveException error) {
-            pull(new PackageToClient(new byte[0], 0, error.getMessage()));
+            pull(new ID_Pack(ctx, new PackageToClient(new byte[0], 0, error.getMessage())));
             return;
         }
         String out = ExportCouplesToICal.start(couples);
-        pull(new PackageToClient(out.getBytes(), couples.size(), "ok."));
+        pull(new ID_Pack(ctx, new PackageToClient(out.getBytes(), couples.size(), "ok.")));
     }
 
-    private PackageToServer poll() {
+    private ID_Pack poll() {
         synchronized (qIn) {
-            PackageToServer out;
+            ID_Pack out;
             do {
                 out = qIn.poll();
             } while (out == null);
@@ -80,7 +89,7 @@ public class TaskExecutor implements Runnable {
         }
     }
 
-    private void pull(PackageToClient pack) {
+    private void pull(ID_Pack pack) {
         synchronized (qOut) {qOut.add(pack);}
     }
 

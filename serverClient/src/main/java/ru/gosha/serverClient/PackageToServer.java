@@ -4,9 +4,11 @@
 
 package ru.gosha.serverClient;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
-public class PackageToServer implements Serializable {
+public class PackageToServer extends Package {
 
     /**
     Тут содержатся файлы и .xls и .xlsx
@@ -28,31 +30,12 @@ public class PackageToServer implements Serializable {
         this.QueryCriteria = QueryCriteria;
     }
 
-    /**
-     * Преобразует текущий класс в поток байтов.
-     * @return Хранилище данного класса в виде байтов.
-     */
-    public byte[] toByteArray() {
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ObjectOutputStream outObj = new ObjectOutputStream(out);
 
-
-            // conversion from "yourObject" to byte[]
-            outObj.writeObject(this);
-            outObj.flush();
-            outObj.close();
-            return out.toByteArray();
-        }
-        catch (IOException error){
-            return new byte[]{};
-        }
-    }
 
     /**
      * Преобразует входящий массив байтов в текущее хранилище.
      * @param input Массив байтов, который необходимо перевести в текущий класс.
-     * @return Представление хранилища в классе PackageToServer. Если ошибка, то null.
+     * @return Представление хранилища в классе PackageToClient. Если ошибка, то null.
      * @throws ClassNotFoundException Данные не истинные.
      */
     public static PackageToServer fromByteArray(byte[] input) throws ClassNotFoundException {

@@ -4,9 +4,11 @@
 
 package ru.gosha.serverClient;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
-public class PackageToClient implements Serializable {
+public class PackageToClient extends Package {
 
     /**
      * Тут содержатся файл .iCal.
@@ -34,26 +36,7 @@ public class PackageToClient implements Serializable {
         this.Messages = Messages;
     }
 
-    /**
-     * Преобразует текущий класс в поток байтов.
-     * @return Хранилище данного класса в виде байтов.
-     */
-    public byte[] toByteArray() {
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ObjectOutputStream outObj = new ObjectOutputStream(out);
 
-
-            // conversion from "yourObject" to byte[]
-            outObj.writeObject(this);
-            outObj.flush();
-            outObj.close();
-            return out.toByteArray();
-        }
-        catch (IOException error){
-            return new byte[]{};
-        }
-    }
 
     /**
      * Преобразует входящий массив байтов в текущее хранилище.

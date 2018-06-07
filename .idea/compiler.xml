@@ -11,5 +11,8 @@
         <module name="serverexel" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="serverexel" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

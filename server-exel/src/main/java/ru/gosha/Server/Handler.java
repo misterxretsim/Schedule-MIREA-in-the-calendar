@@ -15,9 +15,9 @@ import io.netty.util.ReferenceCountUtil;
 import java.util.Queue;
 
 public class Handler extends ChannelInboundHandlerAdapter {
-    private Queue<PackageToServer> qInput;
+    private Queue<ID_Pack> qInput;
 
-    Handler(Queue<PackageToServer> queueInput) {
+    Handler(Queue<ID_Pack> queueInput) {
         this.qInput = queueInput;
     }
 
@@ -27,7 +27,7 @@ public class Handler extends ChannelInboundHandlerAdapter {
             ByteBuf message =(ByteBuf) msg;
             try {
                 synchronized (qInput) {
-                    qInput.add(PackageToServer.fromByteArray(message.array()));
+                    qInput.add(new ID_Pack(ctx, PackageToServer.fromByteArray(message.array())));
                 }
             } catch (ClassNotFoundException error) {return;}
 

@@ -1,5 +1,6 @@
 package ru.gosha;
 
+import ru.gosha.Server.ID_Pack;
 import ru.gosha.Server.Server;
 import ru.gosha.Server.TaskExecutor;
 import ru.gosha.serverClient.PackageToClient;
@@ -14,8 +15,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception
     {
-        Queue<PackageToServer> qIn = new LinkedBlockingQueue<PackageToServer>();
-        Queue<PackageToClient> qOut = new ArrayDeque<PackageToClient>();
+        Queue<ID_Pack> qIn = new LinkedBlockingQueue<ID_Pack>();
+        Queue<ID_Pack> qOut = new ArrayDeque<ID_Pack>();
 
         TaskExecutor taskExecutor = new TaskExecutor(qIn, qOut);
         Thread[] threadExecutorArr = new Thread[threadNumber];
