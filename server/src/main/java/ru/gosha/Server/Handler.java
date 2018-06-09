@@ -4,7 +4,7 @@
  */
 
 package ru.gosha.Server;
-import ru.gosha.serverClient.PackageToServer;
+import ru.gosha.interpreter.PackageToServer;
 
 
 import io.netty.buffer.ByteBuf;

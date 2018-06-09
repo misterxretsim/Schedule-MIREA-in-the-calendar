@@ -7,14 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="client" />
-        <module name="ru.gosha.serverClient" />
+        <module name="interpreter" />
         <module name="server" />
-        <module name="serverClient" />
+        <module name="serverclient" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="clientexel" target="1.8" />
-      <module name="Server" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

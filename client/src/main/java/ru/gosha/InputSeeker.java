@@ -1,11 +1,10 @@
 package ru.gosha;
 
-import ru.gosha.serverClient.Seeker;
-import ru.gosha.serverClient.SeekerType;
+import ru.gosha.interpreter.Seeker;
+import ru.gosha.interpreter.SeekerType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.TimeZone;
@@ -53,6 +52,6 @@ public class InputSeeker {
         //System.out.println(nameOfSeeker +" "+ teacher+" "+ studyGroup+" "+dateStart+" "+dateFinish+" "+defaultAddress);
 
 
-        return new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish , timeZone, defaultAddress);
+        return null;//new Seeker(nameOfSeeker, teacher.equals("") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish , timeZone, defaultAddress);
     }
 }

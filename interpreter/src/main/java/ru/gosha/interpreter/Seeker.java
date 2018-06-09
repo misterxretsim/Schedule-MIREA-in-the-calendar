@@ -4,7 +4,7 @@
 Суть запроса: имя искателя, тип искателя (преподаватель, студент), дата начала и конца семестра, адрес по-умолчанию.
  */
 
-package ru.gosha.serverClient;
+package ru.gosha.interpreter;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -14,8 +14,8 @@ package ru.gosha.CouplesDetective;
  */
 
 import ru.gosha.CouplesDetective.xl.ExcelFileInterface;
-import ru.gosha.serverClient.Seeker;
-import ru.gosha.serverClient.SeekerType;
+import ru.gosha.interpreter.Seeker;
+import ru.gosha.interpreter.SeekerType;
 
 import java.awt.*;
 import java.io.IOException;

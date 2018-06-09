@@ -1,7 +1,7 @@
 package ru.gosha.Server;
 
 import io.netty.channel.ChannelHandlerContext;
-import ru.gosha.serverClient.Package;
+import ru.gosha.interpreter.Package;
 
 public class ID_Pack {
 

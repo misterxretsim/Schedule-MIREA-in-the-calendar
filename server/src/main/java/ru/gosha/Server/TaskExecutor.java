@@ -7,8 +7,8 @@ import ru.gosha.CouplesDetective.xl.OpenFile;
 import ru.gosha.CouplesDetective.Couple;
 import ru.gosha.CouplesDetective.Detective;
 import ru.gosha.CouplesDetective.DetectiveException;
-import ru.gosha.serverClient.PackageToClient;
-import ru.gosha.serverClient.PackageToServer;
+import ru.gosha.interpreter.PackageToClient;
+import ru.gosha.interpreter.PackageToServer;
 
 import java.io.*;
 import java.util.ArrayList;

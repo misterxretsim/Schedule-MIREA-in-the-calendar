@@ -1,4 +1,4 @@
-package ru.gosha.serverClient;
+package ru.gosha.interpreter;
 
 import java.io.*;
 

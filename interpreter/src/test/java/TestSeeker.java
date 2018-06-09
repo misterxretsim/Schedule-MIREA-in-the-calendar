@@ -1,5 +1,5 @@
 
-import ru.gosha.serverClient.*;
+import ru.gosha.interpreter.*;
 
 import java.time.LocalDate;
 

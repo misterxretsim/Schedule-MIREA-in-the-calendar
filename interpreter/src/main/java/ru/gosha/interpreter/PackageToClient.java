@@ -2,7 +2,7 @@
 Файл указывает правило, какие данные будут переданы клиенту.
  */
 
-package ru.gosha.serverClient;
+package ru.gosha.interpreter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

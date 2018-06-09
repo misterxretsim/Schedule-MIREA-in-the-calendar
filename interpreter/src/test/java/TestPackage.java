@@ -1,8 +1,8 @@
-import ru.gosha.serverClient.PackageToClient;
-import ru.gosha.serverClient.PackageToServer;
+import ru.gosha.interpreter.PackageToClient;
+import ru.gosha.interpreter.PackageToServer;
 import org.junit.Test;
-import ru.gosha.serverClient.Seeker;
-import ru.gosha.serverClient.SeekerType;
+import ru.gosha.interpreter.Seeker;
+import ru.gosha.interpreter.SeekerType;
 
 import java.time.LocalDate;
 
