@@ -1,14 +1,15 @@
 package ru.gosha.CouplesDetective;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 
 public class Couple {
     /**
      * Дата и время пары.
      */
-    public Date DateAndTimeOfCouple;
+    public LocalDateTime DateAndTimeOfCouple;
     /**
      * Название группы.
      */
@@ -36,20 +37,20 @@ public class Couple {
 
     /**
      * Получает на входе данные про две строки. Принимает решение, в какие дни будут пары.
-     * @param Start Дата и время начала сессии. Расписание будет составлено с этого дня и времени.
-     * @param Finish Дата и время окончания сессии. Расписание будет составлено до этого дня и времени.
-     * @param TimeOfCouples Расписание звонков занятий в минутах.
+     * @param start Дата и время начала сессии. Расписание будет составлено с этого дня и времени.
+     * @param finish Дата и время окончания сессии. Расписание будет составлено до этого дня и времени.
+     * @param timeStartOfCouple Время начала пары.
+     * @param timeFinishOfCouple Время окончания пары.
      * @param nameOfGroup Рассматриваемая группа.
-     * @param DayOfTheWeek Рассматриваемый день недели.
+     * @param dayOfWeek Рассматриваемый день недели. Использование: Напрмер, Calendar.MUNDAY
      * @param ItemTitle Первая строка данных названия предмета. Сюда может входить и номера недель.
-     * @param TypeOfLesson Первая строка типа занятия.
-     * @param NameOfTeacher Первая строка данных преподавателя.
-     * @param Audience Первая строка аудитории.
-     * @param Address Адрес корпуса.
-     * @param NumberOfCoupleDouble Какая это строка записи занятия? Первая строка пусть будет равна 0.
+     * @param typeOfLesson Первая строка типа занятия.
+     * @param nameOfTeacher Первая строка данных преподавателя.
+     * @param audience Первая строка аудитории.
+     * @param address Адрес корпуса.
      * @return Возвращает, в какие дни будут пары.
      */
-    public static Iterable<Couple> GetCouplesByPeriod(LocalDate Start, LocalDate Finish, int[] TimeOfCouples, byte DayOfTheWeek, String nameOfGroup, String ItemTitle, String TypeOfLesson, String NameOfTeacher, String Audience, String Address, int NumberOfCoupleDouble) {
+    public static Iterable<Couple> GetCouplesByPeriod(LocalDate start, LocalDate finish, int timeStartOfCouple, int timeFinishOfCouple, DayOfWeek dayOfWeek, String nameOfGroup, String ItemTitle, String typeOfLesson, String nameOfTeacher, String audience, String address) {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
         ItemTitle = ItemTitle.trim();
