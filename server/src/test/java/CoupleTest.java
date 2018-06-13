@@ -203,4 +203,50 @@ public class CoupleTest {
             /* Аудитория */             assertEquals(aud, o.Audience);
         }
     }
+
+    /**
+     * Тестирование одной пары на четыре месяца по чётным неделям.
+     */
+    @Test
+    public void startTestOneCoupleDuring4MonthInEvenWeek() {
+
+        LocalDate start = LocalDate.of(2018, Month.JANUARY, 1);
+        LocalDate finish = LocalDate.of(2018, Month.APRIL, YearMonth.of(2018, Month.APRIL).lengthOfMonth()); // Последний день апреля 2018 года.
+
+        LocalTime time1 = LocalTime.of(10, 40, 0);
+        LocalTime time2 = LocalTime.of(12, 10, 0);
+
+        DayOfWeek day = DayOfWeek.THURSDAY; // Четверг
+
+        int timezone = 0; // GMT+0:00
+
+        String nGr = "АБВГ-01-ГА";
+        String nam = ",vrihjegijrw\"woefkweo\21ew_093i2-FFOKEOKOкуцпцшокш342хгйе9з3кшйз3сь4мш9рХШАООХЕ3пп4хзр54.епз35щлр344щее.3уе4.н.3ен.ен.45..5н.54.542FPQWQ#@(-)@(#)$oqfk"; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
+        String typ = "Лабораторная работа.";
+        String tic = "ГГГГгггггг. А. а.";
+        String add = "ВОдичка";
+        String aud = "А-(-1) = А+1";
+
+        List<Couple> out = Couple.GetCouplesByPeriod(start, finish, time1, time2, timezone, day, false, nGr, nam, typ, tic, aud, add);
+
+        /* Количество */            assertEquals(8, out.size());
+        /* Время начала пары 1*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.JANUARY, 11), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(0).DateAndTimeOfCouple);
+        /* Время начала пары 2*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.JANUARY, 25), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(1).DateAndTimeOfCouple);
+        /* Время начала пары 3*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.FEBRUARY, 8), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(2).DateAndTimeOfCouple);
+        /* Время начала пары 4*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.FEBRUARY, 22), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(3).DateAndTimeOfCouple);
+        /* Время начала пары 5*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.MARCH, 8), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(4).DateAndTimeOfCouple);
+        /* Время начала пары 6*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.MARCH, 22), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(5).DateAndTimeOfCouple);
+        /* Время начала пары 7*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.APRIL, 5), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(6).DateAndTimeOfCouple);
+        /* Время начала пары 8*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.APRIL, 19), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(7).DateAndTimeOfCouple);
+        for(Couple o : out)
+        {
+            /* Продолжительность пары*/ assertEquals(Duration.between(time1, time2), o.DurationOfCouple);
+            /* Название группы */       assertEquals(nGr, o.NameOfGroup);
+            /* Название предмета */     assertEquals(nam, o.ItemTitle);
+            /* Тип пары */              assertEquals(typ, o.TypeOfLesson);
+            /* Имя преподавателя*/      assertEquals(tic, o.NameOfTeacher);
+            /* Адрес кампуса */         assertEquals(add, o.Address);
+            /* Аудитория */             assertEquals(aud, o.Audience);
+        }
+    }
 }
