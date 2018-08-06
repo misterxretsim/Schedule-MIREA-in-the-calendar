@@ -2,6 +2,8 @@ package ru.gosha.CouplesDetective;
 
 import java.time.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Couple {
@@ -59,10 +61,25 @@ public class Couple {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
         itemTitle = itemTitle.trim();
-        if(itemTitle.contains("н."))
+        if(itemTitle.contains(" н. ") || itemTitle.contains(" н "))
         {
-            if(itemTitle.contains("кр."));
+            if(itemTitle.contains("кр. "));
         }
         return null;
+    }
+
+    public static boolean isStringHaveWeek(String itemTitle){
+        // ^.+ н\.? .+$|^н\.? .+$|^.+ н\.?\b.+$
+        Pattern p = Pattern.compile("((^.+\\s)|(^))[нН]\\.?.+$");
+        Matcher m = p.matcher(itemTitle.replaceAll("\n", " "));
+        return m.matches();
+    }
+
+    public static boolean isStringHaveException(String itemTitle){
+        // н\\.? |^н\\.? | н\\.?\b
+        if(!isStringHaveWeek(itemTitle)) return false;
+        Pattern p = Pattern.compile("((^.+\\s)|(^))кр\\.?.+$");
+        Matcher m = p.matcher(itemTitle.replaceAll("\n", " "));
+        return m.matches();
     }
 }

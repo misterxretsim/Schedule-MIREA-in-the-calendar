@@ -4,9 +4,11 @@ import ru.gosha.CouplesDetective.Couple;
 
 import java.time.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CoupleTest {
-
     /**
      * Тестирование, если у нас одна пара в один день.
      */
@@ -248,5 +250,74 @@ public class CoupleTest {
             /* Адрес кампуса */         assertEquals(add, o.Address);
             /* Аудитория */             assertEquals(aud, o.Audience);
         }
+    }
+
+    @Test
+    public void startTestRex() {
+
+        /*
+        Beginner
+         */
+
+        assertTrue(
+                Pattern.compile("^[a-z0-9_-]{3,15}$")
+                        .matcher("vovan").matches()
+        );
+
+        assertFalse(
+                Pattern.compile("^[a-z0-9_-]{3,15}$")
+                        .matcher("_@BEST").matches()
+        );
+
+        // --------
+
+        assertTrue(
+                Pattern.compile("^.+w\\.?.+$")
+                        .matcher("1 w. 1").matches()
+        );
+
+        assertTrue(
+                Pattern.compile("^.+н\\.?.+$")
+                        .matcher("1 н. 1").matches()
+        );
+
+        assertTrue(
+                Pattern.compile(".+н\\.?.+")
+                        .matcher("1 н. 1").matches()
+        );
+
+        assertFalse(
+                Pattern.compile("н\\.?")
+                        .matcher("1 н. 1").matches()
+        );
+
+        assertTrue(
+                Pattern.compile("(^.+\\s[нН]\\.?.+$)")
+                        .matcher("1 н. 1").matches()
+        );
+
+        assertFalse(
+                Pattern.compile("(^.+\\s[нН]\\.?.+$)|()")
+                        .matcher("1 н. 1\n").matches()
+        );
+
+        // --------
+
+
+        assertTrue(Couple.isStringHaveWeek("1 н. 1"));
+        assertTrue(Couple.isStringHaveWeek("1 н. 1\n"));
+        assertTrue(Couple.isStringHaveWeek("кр 5 н Логика\n"));
+        assertTrue(Couple.isStringHaveWeek("кр. 5 н. Логика\n"));
+        assertFalse(Couple.isStringHaveWeek("Внешний и внутренний PR\n"));
+        assertFalse(Couple.isStringHaveWeek("Дискретная математика\n"));
+        assertTrue(Couple.isStringHaveWeek("11,13,15,17 н. Правоведение\n"));
+        assertTrue(Couple.isStringHaveWeek("11,13,15,17 н Правоведение\n"));
+
+        assertTrue(Couple.isStringHaveException("кр 5 н Логика\n"));
+        assertTrue(Couple.isStringHaveException("кр. 5 н. Логика\n"));
+        assertFalse(Couple.isStringHaveException("Внешний и внутренний PR\n"));
+        assertFalse(Couple.isStringHaveException("Дискретная математика\n"));
+        assertFalse(Couple.isStringHaveException("11,13,15,17 н. Правоведение\n"));
+
     }
 }
