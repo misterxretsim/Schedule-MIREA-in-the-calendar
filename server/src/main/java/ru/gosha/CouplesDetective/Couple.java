@@ -68,6 +68,11 @@ public class Couple {
         return null;
     }
 
+    /**
+     * Данная функция отвечает, содержится ли в тексте (например, в названии предмета) заметки о том, в каких неделях проходят пары.
+     * @param itemTitle Заголовок названия предмета из таблицы расписания.
+     * @return True, если стоит учесть внимание на исключения. Иначе - false.
+     */
     public static boolean isStringHaveWeek(String itemTitle){
         // ^.+ н\.? .+$|^н\.? .+$|^.+ н\.?\b.+$
         Pattern p = Pattern.compile("((^.+\\s)|(^))[нН]\\.?.+$");
@@ -75,7 +80,12 @@ public class Couple {
         return m.matches();
     }
 
-    public static boolean isStringHaveException(String itemTitle){
+    /**
+     * Данная функция отвечает, содержится ли в тексте (например, в названии предмета) заметки о том, в каких неделях не проходят пары.
+     * @param itemTitle Заголовок названия предмета из таблицы расписания.
+     * @return True, если стоит учесть внимание на исключения. Иначе - false.
+     */
+    public static boolean isStringHaveWeekException(String itemTitle){
         // н\\.? |^н\\.? | н\\.?\b
         if(!isStringHaveWeek(itemTitle)) return false;
         Pattern p = Pattern.compile("((^.+\\s)|(^))кр\\.?.+$");
