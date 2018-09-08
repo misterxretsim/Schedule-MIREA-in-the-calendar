@@ -22,7 +22,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.MONDAY;
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault();
 
         String nGr = "Группа-01 32";
         String nam = "Математика и инженерия."; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
@@ -34,7 +34,8 @@ public class CoupleTest {
         List<Couple> out = Couple.GetCouplesByPeriod(start, finish, time1, time2, timezone, day, true, nGr, nam, typ, tic, aud, add);
 
         /* Количество */            assertEquals(1, out.size());
-        /* Время начала пары*/      assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.JANUARY, 1), LocalTime.of(0, 1, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(0).DateAndTimeOfCouple);
+        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.of(2018, Month.JANUARY, 1), LocalTime.of(0, 1, 0));
+        /* Время начала пары*/      assertEquals(OffsetDateTime.of(localDateTime, timezone.getOffset(localDateTime.getLong())), out.get(0).DateAndTimeOfCouple);
         /* Продолжительность пары*/ assertEquals(Duration.between(time1, time2), out.get(0).DurationOfCouple);
         /* Название группы */       assertEquals(nGr, out.get(0).NameOfGroup);
         /* Название предмета */     assertEquals(nam, out.get(0).ItemTitle);
