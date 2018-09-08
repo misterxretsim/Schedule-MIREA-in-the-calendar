@@ -5,6 +5,7 @@ import ru.gosha.interpreter.Seeker;
 import ru.gosha.interpreter.SeekerType;
 
 import java.time.LocalDate;
+import java.util.TimeZone;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +34,7 @@ public class TestPackage {
                                                         SeekerType.Teacher,
                                                         LocalDate.MIN,
                                                         LocalDate.MAX,
-                                                        0,
+                                                        TimeZone.getDefault(),
                                                         "МУУУУУУ"
                                                 )
                                 ).
@@ -48,7 +49,7 @@ public class TestPackage {
                         SeekerType.Teacher,
                         LocalDate.MIN,
                         LocalDate.MAX,
-                        0,
+                        TimeZone.getDefault(),
                         "МУУУУУУ"
                 ), a.QueryCriteria);
     }

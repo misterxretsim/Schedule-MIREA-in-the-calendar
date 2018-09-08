@@ -4,6 +4,7 @@ import ru.gosha.CouplesDetective.Couple;
 
 import java.time.*;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 public class CoupleTest {
@@ -95,7 +96,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.MONDAY;
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = 0; // GMT+0:00
 
         String nGr = "Группа-24 32";
         String nam = "Русский jaja номер Нан 1 4 2."; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml

@@ -32,14 +32,6 @@ public class Seeker implements Serializable {
      */
     public final TimeZone timezoneStart;
     /**
-     * Часовой пояс, где будут пары. Это значение в конце семестра.
-     */
-    public final TimeZone timezoneFinish;
-    /**
-     * Указывать день, в котором меняется timeZone с timezoneStart на timezoneFinish
-     */
-    public final LocalDate switchTimeZone;
-    /**
      * Адрес кампуса по-умолчанию.
      */
     public final String defaultAddress;
@@ -54,17 +46,14 @@ public class Seeker implements Serializable {
      * @param dateStart Дата начала составления расписания. С какого календарного дня надо составлять расписание? Дата указывается по местному времени.
      * @param dateFinish Дата конца составления расписания. До какого календарного дня надо составлять расписание? Дата указывается по местному времени.
      * @param timezoneStart Часовой пояс, где будут пары. Это значение в начале семестра.
-     * @param timezoneFinish Часовой пояс, где будут пары. Это значение в конце семестра.
      * @param defaultAddress Какой адрес корпуса по-умолчанию?
      */
-    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, TimeZone timezoneStart, TimeZone timezoneFinish, LocalDate switchTimeZone, String defaultAddress) {
+    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, TimeZone timezoneStart, String defaultAddress) {
         this.nameOfSeeker = nameOfSeeker;
         this.seekerType = seekerType;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
         this.timezoneStart = timezoneStart;
-        this.timezoneFinish = timezoneFinish;
-        this.switchTimeZone = switchTimeZone;
         this.defaultAddress = defaultAddress;
     }
 

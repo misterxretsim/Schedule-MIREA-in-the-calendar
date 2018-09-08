@@ -2,6 +2,7 @@ package ru.gosha.CouplesDetective;
 
 import java.time.*;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,7 +47,7 @@ public class Couple {
      * @param finish Дата и время окончания сессии. Расписание будет составлено до этого дня и времени.
      * @param timeStartOfCouple Время начала пары.
      * @param timeFinishOfCouple Время окончания пары.
-     * @param timezone Часовой пояс, в котором указано время в расписании. Указывается в секундах.
+     * @param timezoneStart Часовой пояс, в котором начинается учебный план.
      * @param nameOfGroup Рассматриваемая группа.
      * @param dayOfWeek Рассматриваемый день недели. Использование: Напрмер, Calendar.MUNDAY.
      * @param isOdd True, если это для не чётной недели. False, если эта строка для чётной недели.
@@ -57,7 +58,7 @@ public class Couple {
      * @param address Адрес корпуса.
      * @return Возвращает, в какие дни будут пары.
      */
-    public static List<Couple> GetCouplesByPeriod(LocalDate start, LocalDate finish, LocalTime timeStartOfCouple, LocalTime timeFinishOfCouple, int timezone, DayOfWeek dayOfWeek, boolean isOdd, String nameOfGroup, String itemTitle, String typeOfLesson, String nameOfTeacher, String audience, String address) {
+    public static List<Couple> GetCouplesByPeriod(LocalDate start, LocalDate finish, LocalTime timeStartOfCouple, LocalTime timeFinishOfCouple, TimeZone timezoneStart, DayOfWeek dayOfWeek, boolean isOdd, String nameOfGroup, String itemTitle, String typeOfLesson, String nameOfTeacher, String audience, String address) {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
         itemTitle = itemTitle.trim();

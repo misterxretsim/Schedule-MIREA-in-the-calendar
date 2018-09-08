@@ -2,6 +2,9 @@
 import ru.gosha.interpreter.*;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -14,13 +17,18 @@ public class TestSeeker {
 
         System.out.println("Test Seeker start.");
 
-        Seeker test = new Seeker("name", SeekerType.Teacher, LocalDate.of(2000, 5, 5), LocalDate.of(2000, 5, 10), +3 * 60 * 60, "Москва, проспект Вернадского, 78, РТУ МИРЭА");
+        Seeker test = new Seeker("name",
+                SeekerType.Teacher,
+                LocalDate.of(2000, 5, 5),
+                LocalDate.of(2000, 5, 10),
+                TimeZone.getDefault(),
+                "Москва, проспект Вернадского, 78, РТУ МИРЭА");
 
         assertEquals("name", test.nameOfSeeker);
         assertEquals(SeekerType.Teacher, test.seekerType);
         assertEquals(LocalDate.of(2000, 5, 5), test.dateStart);
         assertEquals(LocalDate.of(2000, 5, 10), test.dateFinish);
-        assertEquals(10800, test.timezoneStart);
+        assertEquals(TimeZone.getDefault(), test.timezoneStart);
         assertEquals("Москва, проспект Вернадского, 78, РТУ МИРЭА", test.defaultAddress);
 
         PackageToClient cl = new PackageToClient(new byte[]{0, 0}, 0, "Всё ок");
