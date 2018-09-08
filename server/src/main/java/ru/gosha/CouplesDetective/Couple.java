@@ -1,14 +1,20 @@
 package ru.gosha.CouplesDetective;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.*;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Couple {
     /**
      * Дата и время пары.
      */
-    public Date DateAndTimeOfCouple;
+    public OffsetDateTime DateAndTimeOfCouple;
+    /**
+     * Количество времени, сколько длится пара.
+     */
+    public Duration DurationOfCouple;
     /**
      * Название группы.
      */
@@ -36,27 +42,54 @@ public class Couple {
 
     /**
      * Получает на входе данные про две строки. Принимает решение, в какие дни будут пары.
-     * @param Start Дата и время начала сессии. Расписание будет составлено с этого дня и времени.
-     * @param Finish Дата и время окончания сессии. Расписание будет составлено до этого дня и времени.
-     * @param TimeOfCouples Расписание звонков занятий в минутах.
+     * @param start Дата и время начала сессии. Расписание будет составлено с этого дня и времени.
+     * @param finish Дата и время окончания сессии. Расписание будет составлено до этого дня и времени.
+     * @param timeStartOfCouple Время начала пары.
+     * @param timeFinishOfCouple Время окончания пары.
+     * @param timezone Часовой пояс, в котором указано время в расписании. Указывается в секундах.
      * @param nameOfGroup Рассматриваемая группа.
-     * @param DayOfTheWeek Рассматриваемый день недели.
-     * @param ItemTitle Первая строка данных названия предмета. Сюда может входить и номера недель.
-     * @param TypeOfLesson Первая строка типа занятия.
-     * @param NameOfTeacher Первая строка данных преподавателя.
-     * @param Audience Первая строка аудитории.
-     * @param Address Адрес корпуса.
-     * @param NumberOfCoupleDouble Какая это строка записи занятия? Первая строка пусть будет равна 0.
+     * @param dayOfWeek Рассматриваемый день недели. Использование: Напрмер, Calendar.MUNDAY.
+     * @param isOdd True, если это для не чётной недели. False, если эта строка для чётной недели.
+     * @param itemTitle Первая строка данных названия предмета. Сюда может входить и номера недель.
+     * @param typeOfLesson Первая строка типа занятия.
+     * @param nameOfTeacher Первая строка данных преподавателя.
+     * @param audience Первая строка аудитории.
+     * @param address Адрес корпуса.
      * @return Возвращает, в какие дни будут пары.
      */
-    public static Iterable<Couple> GetCouplesByPeriod(LocalDate Start, LocalDate Finish, int[] TimeOfCouples, byte DayOfTheWeek, String nameOfGroup, String ItemTitle, String TypeOfLesson, String NameOfTeacher, String Audience, String Address, int NumberOfCoupleDouble) {
+    public static List<Couple> GetCouplesByPeriod(LocalDate start, LocalDate finish, LocalTime timeStartOfCouple, LocalTime timeFinishOfCouple, int timezone, DayOfWeek dayOfWeek, boolean isOdd, String nameOfGroup, String itemTitle, String typeOfLesson, String nameOfTeacher, String audience, String address) {
         ///.get(Calendar.DAY_OF_WEEK);
         // TODO: Данная функция ещё не разработана.
-        ItemTitle = ItemTitle.trim();
-        if(ItemTitle.contains("н."))
+        itemTitle = itemTitle.trim();
+        if(itemTitle.contains(" н. ") || itemTitle.contains(" н "))
         {
-            if(ItemTitle.contains("кр."));
+            if(itemTitle.contains("кр. "));
         }
         return null;
+    }
+
+    /**
+     * Данная функция отвечает, содержится ли в тексте (например, в названии предмета) заметки о том, в каких неделях проходят пары.
+     * @param itemTitle Заголовок названия предмета из таблицы расписания.
+     * @return True, если стоит учесть внимание на исключения. Иначе - false.
+     */
+    public static boolean isStringHaveWeek(String itemTitle){
+        // ^.+ н\.? .+$|^н\.? .+$|^.+ н\.?\b.+$
+        Pattern p = Pattern.compile("((^.+\\s)|(^))[нН]\\.?.+$");
+        Matcher m = p.matcher(itemTitle.replaceAll("\n", " "));
+        return m.matches();
+    }
+
+    /**
+     * Данная функция отвечает, содержится ли в тексте (например, в названии предмета) заметки о том, в каких неделях не проходят пары.
+     * @param itemTitle Заголовок названия предмета из таблицы расписания.
+     * @return True, если стоит учесть внимание на исключения. Иначе - false.
+     */
+    public static boolean isStringHaveWeekException(String itemTitle){
+        // н\\.? |^н\\.? | н\\.?\b
+        if(!isStringHaveWeek(itemTitle)) return false;
+        Pattern p = Pattern.compile("((^.+\\s)|(^))кр\\.?.+$");
+        Matcher m = p.matcher(itemTitle.replaceAll("\n", " "));
+        return m.matches();
     }
 }

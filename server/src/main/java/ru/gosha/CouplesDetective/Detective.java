@@ -19,6 +19,8 @@ import ru.gosha.interpreter.SeekerType;
 
 import java.awt.*;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -211,9 +213,14 @@ public class Detective {
             int r = (row + 1) + (dayOfWeek - 1) * countOfCouples * 2;
             coupleOfWeek.addAll(
                     GetCouplesFromDay
-                            (c, r, nameOfGroup, dayOfWeek, seeker, ignoresCoupleTitle, times,
+                            (c, r, nameOfGroup, DayOfWeek.of(dayOfWeek), seeker, ignoresCoupleTitle, times,
                                     GetAddressOfDay
-                                            (new Point(c, r), countOfCouples, seeker.defaultAddress, ignoresCoupleTitle, file
+                                            (
+                                                    new Point(c, r),
+                                                    countOfCouples,
+                                                    seeker.defaultAddress,
+                                                    ignoresCoupleTitle,
+                                                    file
                                             ),
                                     file
                             )
@@ -227,15 +234,15 @@ public class Detective {
      * @param column Столбец, где находится "Якорь" то есть ячейка с записью "Предмет".
      * @param row Строка, где находится "Якорь" то есть ячейка с записью "Предмет".
      * @param nameOfGroup Имя группы.
-     * @param dayOfWeek День недели.
+     * @param dayOfWeek День недели. 1 - понедельник. 7 - воскресенье.
      * @param seeker Отсюда берётся начало и конец семестра.
      * @param ignoresCoupleTitle Лист занятий, который надо игнорировать.
-     * @param times Лист с началом и окончанием пары. {Начало1пары, конец1пары, начало2пары, конец2пары, ...}
+     * @param times Лист с началом и окончанием пары. {Начало1пары, конец1пары, начало2пары, конец2пары, ...}. Указывается в минутах.
      * @param address Адрес, где находятся пары
      * @param file Файл, откуда надо производить чтение.
      * @return Множество занятий у группы в конкретный день.
      */
-    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, String nameOfGroup, byte dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, int[] times, String address, ExcelFileInterface file) throws IOException {
+    private static Collection<? extends Couple> GetCouplesFromDay(int column, int row, String nameOfGroup, DayOfWeek dayOfWeek, Seeker seeker, List<Point> ignoresCoupleTitle, int[] times, String address, ExcelFileInterface file) throws IOException {
         LinkedList<Couple> coupleOfDay = new LinkedList<>();
         int countOfCouples = times.length / 2;
         for(Point cursor = new Point(column, row); cursor.y < row + countOfCouples*2; cursor.y++) { // Считываем каждую строчку
@@ -246,17 +253,20 @@ public class Detective {
             String[] teachers = file.getCellData(cursor.x + 2, cursor.y).trim().split(("\r\n|\n"));
             String[] audiences = file.getCellData(cursor.x + 3, cursor.y).trim().split(("\r\n|\n"));
             for (int indexInLine = 0; indexInLine < titles.length; indexInLine++) {
-                Iterable<Couple> listCouplesOfLine = Couple.GetCouplesByPeriod(seeker.dateStart,
+                Iterable<Couple> listCouplesOfLine = Couple.GetCouplesByPeriod(
+                        seeker.dateStart,
                         seeker.dateFinish,
-                        times,
+                        LocalTime.of(times[2*indexInLine] / 60, times[2*indexInLine] % 60),
+                        LocalTime.of(times[2*indexInLine + 1] / 60, times[2*indexInLine + 1] % 60),
+                        seeker.timezone,
                         dayOfWeek,
+                        indexInLine % 2 == 1,
                         nameOfGroup,
                         titles[indexInLine],
                         indexInLine < typeOfLessons.length ? typeOfLessons[indexInLine] : typeOfLessons[0],
                         indexInLine < teachers.length ? teachers[indexInLine] : teachers[0],
                         indexInLine < audiences.length ? audiences[indexInLine] : audiences[0],
-                        address,
-                        cursor.y - row);
+                        address);
                 if(listCouplesOfLine != null) for (Couple coup : listCouplesOfLine)
                     coupleOfDay.add(coup); // Все пары, которые вернусь с GetCouplesByPeriod надо добавить в наш список.
             }
