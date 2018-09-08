@@ -8,6 +8,7 @@ package ru.gosha.interpreter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.TimeZone;
 
 public class Seeker implements Serializable {
     /**
@@ -27,13 +28,22 @@ public class Seeker implements Serializable {
      */
     public final LocalDate dateFinish;
     /**
-     * Часовой пояс, в котором указано время в расписании. Указывается в секундах.
+     * Часовой пояс, где будут пары. Это значение в начале семестра.
      */
-    public final int timezone;
+    public final TimeZone timezoneStart;
+    /**
+     * Часовой пояс, где будут пары. Это значение в конце семестра.
+     */
+    public final TimeZone timezoneFinish;
+    /**
+     * Указывать день, в котором меняется timeZone с timezoneStart на timezoneFinish
+     */
+    public final LocalDate switchTimeZone;
     /**
      * Адрес кампуса по-умолчанию.
      */
     public final String defaultAddress;
+
 
     //public List<Couple> Couples = new LinkedList<>(); Нельзя здесь зависимость от Couple.
 
@@ -43,15 +53,18 @@ public class Seeker implements Serializable {
      * @param seekerType Тип искателя. Это либо преподаватель, либо студент.
      * @param dateStart Дата начала составления расписания. С какого календарного дня надо составлять расписание? Дата указывается по местному времени.
      * @param dateFinish Дата конца составления расписания. До какого календарного дня надо составлять расписание? Дата указывается по местному времени.
-     * @param timezone Часовой пояс, в котором указано время в расписании. Указывается в секундах. Например, UTC+3:00 указывается как +3 * 60 * 60. Пользователя надо обязательно спросить, переходит ли на зимнее/летнее часы! Если да, то хитро манипулировать датами, чтобы часовой пояс был верен.
+     * @param timezoneStart Часовой пояс, где будут пары. Это значение в начале семестра.
+     * @param timezoneFinish Часовой пояс, где будут пары. Это значение в конце семестра.
      * @param defaultAddress Какой адрес корпуса по-умолчанию?
      */
-    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, int timezone, String defaultAddress) {
+    public Seeker(String nameOfSeeker, SeekerType seekerType, LocalDate dateStart, LocalDate dateFinish, TimeZone timezoneStart, TimeZone timezoneFinish, LocalDate switchTimeZone, String defaultAddress) {
         this.nameOfSeeker = nameOfSeeker;
         this.seekerType = seekerType;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
-        this.timezone = timezone;
+        this.timezoneStart = timezoneStart;
+        this.timezoneFinish = timezoneFinish;
+        this.switchTimeZone = switchTimeZone;
         this.defaultAddress = defaultAddress;
     }
 
@@ -67,7 +80,7 @@ public class Seeker implements Serializable {
                             seekerType.equals(e.seekerType) &&
                             dateStart.equals(e.dateStart) &&
                             dateFinish.equals(e.dateFinish) &&
-                            timezone == e.timezone &&
+                            timezoneStart == e.timezoneStart &&
                             defaultAddress.equals(e.defaultAddress);
         }
         return false;

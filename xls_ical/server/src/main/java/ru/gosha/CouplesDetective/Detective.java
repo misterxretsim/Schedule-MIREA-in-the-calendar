@@ -258,7 +258,7 @@ public class Detective {
                         seeker.dateFinish,
                         LocalTime.of(times[2*indexInLine] / 60, times[2*indexInLine] % 60),
                         LocalTime.of(times[2*indexInLine + 1] / 60, times[2*indexInLine + 1] % 60),
-                        seeker.timezone,
+                        seeker.timezoneStart,
                         dayOfWeek,
                         indexInLine % 2 == 1,
                         nameOfGroup,

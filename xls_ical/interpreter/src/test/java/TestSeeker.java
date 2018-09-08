@@ -20,7 +20,7 @@ public class TestSeeker {
         assertEquals(SeekerType.Teacher, test.seekerType);
         assertEquals(LocalDate.of(2000, 5, 5), test.dateStart);
         assertEquals(LocalDate.of(2000, 5, 10), test.dateFinish);
-        assertEquals(10800, test.timezone);
+        assertEquals(10800, test.timezoneStart);
         assertEquals("Москва, проспект Вернадского, 78, РТУ МИРЭА", test.defaultAddress);
 
         PackageToClient cl = new PackageToClient(new byte[]{0, 0}, 0, "Всё ок");
