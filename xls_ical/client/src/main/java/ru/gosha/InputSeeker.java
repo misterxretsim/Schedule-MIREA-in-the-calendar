@@ -20,7 +20,6 @@ public class InputSeeker {
     public Seeker setSeeker() throws ParseException {
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         TimeZone timezone = TimeZone.getDefault();
-        int timeZone = timezone.getRawOffset();
         Scanner scanner = new Scanner(System.in);
         String teacher = null;
         String date = null;
@@ -49,6 +48,6 @@ public class InputSeeker {
         //System.out.println(nameOfSeeker +" "+ teacher+" "+ studyGroup+" "+dateStart+" "+dateFinish+" "+defaultAddress);
 
 
-        return new Seeker(nameOfSeeker, teacher.equals("group") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish , timeZone/1000, defaultAddress);
+        return new Seeker(nameOfSeeker, teacher.equals("group") ? SeekerType.StudyGroup : SeekerType.Teacher, dateStart, dateFinish , timezone, defaultAddress);
     }
 }
