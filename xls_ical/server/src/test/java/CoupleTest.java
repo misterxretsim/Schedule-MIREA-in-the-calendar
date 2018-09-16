@@ -4,7 +4,7 @@ import ru.gosha.CouplesDetective.Couple;
 
 import java.time.*;
 import java.util.List;
-import java.util.TimeZone;
+import java.time.zone.TimeZone;
 import java.util.regex.Pattern;
 
 public class CoupleTest {
@@ -97,7 +97,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.MONDAY;
 
-        TimeZone timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         String nGr = "Группа-24 32";
         String nam = "Русский jaja номер Нан 1 4 2."; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
@@ -133,7 +133,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.TUESDAY;
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         String nGr = "Группа-,";
         String nam = "Математика и н. значения .pgtju340)(HG(fvhgvh"; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
@@ -173,7 +173,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.WEDNESDAY; // Среда
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         String nGr = "АБВГ-01-ГА";
         String nam = ",vrihjegijrw\"woefkweo\21ew_093i2-FFOKEOKOкуцпцшокш342хгйе9з3кшйз3сь4мш9рХШАООХЕ3пп4хзр54.епз35щлр344щее.3уе4.н.3ен.ен.45..5н.54.542FPQWQ#@(-)@(#)$oqfk"; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
@@ -220,7 +220,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.THURSDAY; // Четверг
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         String nGr = "АБВГ-01-ГА";
         String nam = ",vrihjegijrw\"woefkweo\21ew_093i2-FFOKEOKOкуцпцшокш342хгйе9з3кшйз3сь4мш9рХШАООХЕ3пп4хзр54.епз35щлр344щее.3уе4.н.3ен.ен.45..5н.54.542FPQWQ#@(-)@(#)$oqfk"; // http://xpoint.ru/forums/internet/standards/thread/29138.xhtml
@@ -343,7 +343,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.THURSDAY; // Четверг
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         // Имя группы.
         String nGr = "АБВГ-01-ГА";
@@ -392,7 +392,7 @@ public class CoupleTest {
 
         DayOfWeek day = DayOfWeek.THURSDAY; // Четверг
 
-        int timezone = 0; // GMT+0:00
+        TimeZone timezone = TimeZone.getDefault(); // GMT+0:00
 
         // Имя группы.
         String nGr = "АБВГ-01-ГА";
@@ -410,7 +410,21 @@ public class CoupleTest {
         List<Couple> out = Couple.GetCouplesByPeriod(start, finish, time1, time2, timezone, day, false, nGr, nam, typ, tic, aud, add);
 
         /* Количество */            assertEquals(5, out.size());
-        /* Время начала пары 3*/    assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.FEBRUARY, 8), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(0).DateAndTimeOfCouple);
+        /* Время начала пары 3*/
+        assertEquals(
+                OffsetDateTime.of(
+                        LocalDateTime.of(
+                                LocalDate.of(
+                                        2018, Month.FEBRUARY, 8
+                                ),
+                                LocalTime.of(
+                                        10, 40, 0
+                                )
+                        ),
+                        timezone
+                ),
+                out.get(0).DateAndTimeOfCouple
+        );
         /* Время начала пары 5*/    assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.MARCH, 8), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(1).DateAndTimeOfCouple);
         /* Время начала пары 6*/    assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.MARCH, 22), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(2).DateAndTimeOfCouple);
         /* Время начала пары 7*/    assertEquals(OffsetDateTime.of(LocalDateTime.of(LocalDate.of(2018, Month.APRIL, 5), LocalTime.of(10, 40, 0)), ZoneOffset.ofTotalSeconds(timezone)), out.get(3).DateAndTimeOfCouple);
