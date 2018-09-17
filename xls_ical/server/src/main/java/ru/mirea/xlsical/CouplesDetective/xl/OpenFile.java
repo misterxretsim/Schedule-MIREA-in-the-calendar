@@ -1,4 +1,4 @@
-package ru.gosha.CouplesDetective.xl;
+package ru.mirea.xlsical.CouplesDetective.xl;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

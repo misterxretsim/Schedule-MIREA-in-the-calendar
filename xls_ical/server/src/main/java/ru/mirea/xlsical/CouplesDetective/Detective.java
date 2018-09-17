@@ -1,4 +1,4 @@
-package ru.gosha.CouplesDetective;
+package ru.mirea.xlsical.CouplesDetective;
 
 /*
 План детектива:
@@ -13,9 +13,9 @@ package ru.gosha.CouplesDetective;
 
  */
 
-import ru.gosha.CouplesDetective.xl.ExcelFileInterface;
-import ru.gosha.interpreter.Seeker;
-import ru.gosha.interpreter.SeekerType;
+import ru.mirea.xlsical.CouplesDetective.xl.ExcelFileInterface;
+import ru.mirea.xlsical.interpreter.Seeker;
+import ru.mirea.xlsical.interpreter.SeekerType;
 
 import java.awt.*;
 import java.io.IOException;

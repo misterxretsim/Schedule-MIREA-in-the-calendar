@@ -1,18 +1,17 @@
-package ru.gosha.CouplesDetective.xl;
+package ru.mirea.xlsical.CouplesDetective.xl;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.IOException;
 
-public class readFromExcelXLSX implements ExcelFileInterface{
-    XSSFWorkbook myExcelBook = null;
+class readFromExcelXLS implements ExcelFileInterface {
+    HSSFWorkbook myExcelBook = null;
 
 
-    readFromExcelXLSX(XSSFWorkbook myExcelBook) throws IOException {
+    readFromExcelXLS(HSSFWorkbook myExcelBook) throws IOException {
         this.myExcelBook = myExcelBook;
     }
 
@@ -26,15 +25,15 @@ public class readFromExcelXLSX implements ExcelFileInterface{
     @Override
     public String getCellData(int Column, int Row){
         String name = null;
-        XSSFSheet myExcelSheet = myExcelBook.getSheet("1");
-        XSSFRow row = myExcelSheet.getRow(Row - 1);
+        HSSFSheet myExcelSheet = myExcelBook.getSheet("1");
+        HSSFRow row = myExcelSheet.getRow(Row - 1);
         if (Column < 0 || Row < 0)
             name = null;
         else {
             if (row == null)
                 name = " ";
             else {
-                if(row.getCell(Column - 1).getCellType() == XSSFCell.CELL_TYPE_STRING)
+                if(row.getCell(Column - 1).getCellType() == HSSFCell.CELL_TYPE_STRING)
                     name = row.getCell(Column - 1).getStringCellValue();
             }
         }

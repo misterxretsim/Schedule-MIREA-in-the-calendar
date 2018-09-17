@@ -1,14 +1,14 @@
-package ru.gosha.Server;
+package ru.mirea.xlsical.Server;
 
 import io.netty.channel.ChannelHandlerContext;
-import ru.gosha.CouplesDetective.ExportCouplesToICal;
-import ru.gosha.CouplesDetective.xl.ExcelFileInterface;
-import ru.gosha.CouplesDetective.xl.OpenFile;
-import ru.gosha.CouplesDetective.Couple;
-import ru.gosha.CouplesDetective.Detective;
-import ru.gosha.CouplesDetective.DetectiveException;
-import ru.gosha.interpreter.PackageToClient;
-import ru.gosha.interpreter.PackageToServer;
+import ru.mirea.xlsical.CouplesDetective.ExportCouplesToICal;
+import ru.mirea.xlsical.CouplesDetective.xl.ExcelFileInterface;
+import ru.mirea.xlsical.CouplesDetective.xl.OpenFile;
+import ru.mirea.xlsical.CouplesDetective.Couple;
+import ru.mirea.xlsical.CouplesDetective.Detective;
+import ru.mirea.xlsical.CouplesDetective.DetectiveException;
+import ru.mirea.xlsical.interpreter.PackageToClient;
+import ru.mirea.xlsical.interpreter.PackageToServer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class TaskExecutor implements Runnable {
         List<Couple> couples;
         message = poll();
         PackageToServer a;
-        ChannelHandlerContext ctx = message.ctx;
+        Object ctx = message.id;
         if(message.data instanceof PackageToServer)
             a = (PackageToServer) message.data;
         else {

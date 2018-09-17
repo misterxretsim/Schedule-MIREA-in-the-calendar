@@ -1,4 +1,4 @@
-package ru.gosha.CouplesDetective.xl;
+package ru.mirea.xlsical.CouplesDetective.xl;
 
 import java.io.Closeable;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ru.gosha.CouplesDetective.Couple;
+import ru.mirea.xlsical.CouplesDetective.Couple;
 
 import java.time.*;
 import java.util.List;

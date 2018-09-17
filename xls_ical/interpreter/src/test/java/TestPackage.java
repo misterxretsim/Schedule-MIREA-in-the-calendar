@@ -1,8 +1,8 @@
-import ru.gosha.interpreter.PackageToClient;
-import ru.gosha.interpreter.PackageToServer;
+import ru.mirea.xlsical.interpreter.PackageToClient;
+import ru.mirea.xlsical.interpreter.PackageToServer;
 import org.junit.Test;
-import ru.gosha.interpreter.Seeker;
-import ru.gosha.interpreter.SeekerType;
+import ru.mirea.xlsical.interpreter.Seeker;
+import ru.mirea.xlsical.interpreter.SeekerType;
 
 import java.time.LocalDate;
 import java.util.TimeZone;

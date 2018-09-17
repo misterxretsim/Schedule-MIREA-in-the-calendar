@@ -1,9 +1,6 @@
-package ru.gosha;
+package ru.mirea.xlsical;
 
-import ru.gosha.Server.ID_Pack;
-import ru.gosha.Server.Sender;
-import ru.gosha.Server.Server;
-import ru.gosha.Server.TaskExecutor;
+import ru.mirea.xlsical.Server.TaskExecutor;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

@@ -1,8 +1,9 @@
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import ru.gosha.CouplesDetective.xl.*;
 import org.junit.Test;
+import ru.mirea.xlsical.CouplesDetective.xl.ExcelFileInterface;
+import ru.mirea.xlsical.CouplesDetective.xl.OpenFile;
 
 import java.io.File;
 import java.io.FileOutputStream;

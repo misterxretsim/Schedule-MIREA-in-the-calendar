@@ -1,6 +1,4 @@
-package ru.gosha.CouplesDetective;
-
-import java.util.List;
+package ru.mirea.xlsical.CouplesDetective;
 
 public class ExportCouplesToICal {
     public static String start(Iterable<Couple> couples) {
