@@ -1,5 +1,6 @@
 package ru.mirea.xlsical;
 
+import ru.mirea.xlsical.Server.ID_Pack;
 import ru.mirea.xlsical.Server.TaskExecutor;
 
 import java.util.ArrayDeque;
@@ -14,9 +15,6 @@ public class Main {
         Queue<ID_Pack> qIn = new LinkedBlockingQueue<ID_Pack>();
         Queue<ID_Pack> qOut = new ArrayDeque<ID_Pack>();
 
-        Sender sender = new Sender(qOut);
-        Thread senderTh = new Thread(sender);
-
         TaskExecutor taskExecutor = new TaskExecutor(qIn, qOut);
         Thread[] threadExecutorArr = new Thread[threadNumber];
         for (int i=0; i<threadNumber;++i)
@@ -25,18 +23,6 @@ public class Main {
         for (int i=0; i<threadNumber;++i)
             threadExecutorArr[i].start();
 
-        senderTh.start();
-
-        int port;
-        if (args.length > 0)
-        {
-            port = Integer.parseInt(args[0]);
-        }
-        else
-        {
-            port = 60101;
-        }
-        new Server(port, qIn).start();
     }
 }
 
